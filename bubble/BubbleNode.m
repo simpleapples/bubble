@@ -12,7 +12,6 @@
 
 @property (strong, nonatomic) SKSpriteNode *bubbleNormalNode;
 @property (strong, nonatomic) SKSpriteNode *bubbleFlatNode;
-@property (nonatomic) BUBBLE_STATUS status;
 @property (nonatomic) BUBBLE_TYPE type;
 
 @end
@@ -41,6 +40,8 @@
         self.bubbleNormalNode.name = @"BubbleNormal";
         self.bubbleFlatNode = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"%@Flat", bubbleType]];
         self.bubbleFlatNode.name = @"BubbleFlat";
+        self.bubbleFlatNode.hidden = YES;
+        [self addChild:self.bubbleFlatNode];
         [self addChild:self.bubbleNormalNode];
         self.size = self.bubbleNormalNode.size;
     }
@@ -60,9 +61,6 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if (node == self.bubbleNormalNode) {
             self.status = BUBBLE_STATUS_FlAT;
-            [self runAction:[SKAction playSoundFileNamed:@"BubbleSound.mp3" waitForCompletion:NO]];
-            [self.bubbleNormalNode removeFromParent];
-            [self addChild:self.bubbleFlatNode];
         }
     }
 }
@@ -71,6 +69,23 @@
     self.bubbleNormalNode.size = size;
     self.bubbleFlatNode.size = size;
     super.size = size;
+}
+
+- (void)setStatus:(BUBBLE_STATUS)status {
+    if (_status == status) {
+        return;
+    }
+    _status = status;
+    if (self.status == BUBBLE_STATUS_NORMAL) {
+        self.bubbleNormalNode.hidden = NO;
+        self.bubbleFlatNode.hidden = YES;
+    } else if (self.status == BUBBLE_STATUS_FlAT) {
+        self.bubbleNormalNode.hidden = YES;
+        self.bubbleFlatNode.hidden = NO;
+        [self runAction:[SKAction playSoundFileNamed:@"BubbleSound.mp3" waitForCompletion:NO]];
+        NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:self.speedTime], @"speedTime", [NSNumber numberWithInteger:self.type], @"type", [NSNumber numberWithInteger:self.status], @"status", nil];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleClick" object:dict];
+    }
 }
 
 @end

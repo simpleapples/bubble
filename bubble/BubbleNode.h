@@ -20,8 +20,9 @@ typedef NS_OPTIONS(NSInteger, BUBBLE_TYPE) {
 
 @interface BubbleNode : SKSpriteNode
 
-@property (nonatomic, readonly) BUBBLE_STATUS status;
 @property (nonatomic, readonly) BUBBLE_TYPE type;
+@property (nonatomic) BUBBLE_STATUS status;
+@property (nonatomic) NSInteger speedTime;
 
 - (instancetype)initWithType:(BUBBLE_TYPE)type;
 
