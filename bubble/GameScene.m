@@ -9,6 +9,11 @@
 #import "GameScene.h"
 #import "BubbleNode.h"
 
+typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
+    NODE_CATEGORY_BUBBLE = 0,
+    NODE_CATEGORY_NEEDLE,
+};
+
 @interface GameScene () <SKPhysicsContactDelegate>
 
 @property (strong, nonatomic) NSTimer *timer;
@@ -21,9 +26,6 @@
 @end
 
 @implementation GameScene
-
-static const uint32_t needleCategory = 0x1 << 0;
-static const uint32_t bubbleCategory = 0x1 << 1;
 
 static const NSInteger ROAD_NUM = 4;
 static const NSInteger BUBBLE_SIZE = 70;
@@ -60,9 +62,9 @@ static const NSInteger BUBBLE_SIZE = 70;
         needleNode.position = CGPointMake(offsetX, 0);
         needleNode.zPosition = 30;
         needleNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:needleNode.size];
-        needleNode.physicsBody.categoryBitMask = needleCategory;
-        needleNode.physicsBody.contactTestBitMask = needleCategory | bubbleCategory;
-        needleNode.physicsBody.collisionBitMask = needleCategory;
+        needleNode.physicsBody.categoryBitMask = NODE_CATEGORY_NEEDLE;
+        needleNode.physicsBody.contactTestBitMask = NODE_CATEGORY_NEEDLE | NODE_CATEGORY_BUBBLE;
+        needleNode.physicsBody.collisionBitMask = NODE_CATEGORY_NEEDLE;
         [self addChild:needleNode];
     }
     
@@ -86,9 +88,9 @@ static const NSInteger BUBBLE_SIZE = 70;
         bubbleNode.size = CGSizeMake(BUBBLE_SIZE, BUBBLE_SIZE);
         bubbleNode.speedTime = self.speedTime;
         bubbleNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bubbleNode.size];
-        bubbleNode.physicsBody.categoryBitMask = bubbleCategory;
-        bubbleNode.physicsBody.contactTestBitMask = needleCategory | bubbleCategory;
-        bubbleNode.physicsBody.collisionBitMask = bubbleCategory;
+        bubbleNode.physicsBody.categoryBitMask = NODE_CATEGORY_BUBBLE;
+        bubbleNode.physicsBody.contactTestBitMask = NODE_CATEGORY_NEEDLE | NODE_CATEGORY_BUBBLE;
+        bubbleNode.physicsBody.collisionBitMask = NODE_CATEGORY_BUBBLE;
         
         CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
         bubbleNode.position = CGPointMake(offsetX, self.scene.frame.size.height + bubbleNode.size.height / 2);
