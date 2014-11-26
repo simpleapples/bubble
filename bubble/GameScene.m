@@ -9,9 +9,6 @@
 #import "GameScene.h"
 #import "BubbleNode.h"
 
-#define ROAD_NUM 4
-#define GAP 88
-
 @interface GameScene ()
 
 @property (strong, nonatomic) NSTimer *timer;
@@ -22,12 +19,21 @@
 
 @implementation GameScene
 
+static const NSInteger ROAD_NUM = 4;
+static const NSInteger BUBBLE_SIZE = 70;
+
 -(void)didMoveToView:(SKView *)view {
     self.speedTime = 6;
-    NSTimeInterval duration = GAP / ((self.scene.frame.size.height + GAP) / self.speedTime);
-    self.timer = [NSTimer timerWithTimeInterval:duration target:self selector:@selector(createBubbleNode) userInfo:nil repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSDefaultRunLoopMode];
     self.roadWidth = self.scene.frame.size.width / ROAD_NUM;
+    
+    CGFloat gap = self.scene.frame.size.width / ROAD_NUM;
+    NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / self.speedTime);
+    SKAction *createAction = [SKAction runBlock:^{
+        [self createBubbleNode];
+    }];
+    SKAction *waitAction = [SKAction waitForDuration:duration];
+    SKAction *sequence = [SKAction sequence:@[createAction, waitAction]];
+    [self runAction:[SKAction repeatActionForever:sequence]];
     
     SKSpriteNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
@@ -45,6 +51,7 @@
         }
         BubbleNode *bubbleNode = [[BubbleNode alloc] initWithType:type];
         bubbleNode.name = @"BubbleNormal";
+        bubbleNode.size = CGSizeMake(BUBBLE_SIZE, BUBBLE_SIZE);
         
         CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
         bubbleNode.position = CGPointMake(offsetX, self.scene.frame.size.height + bubbleNode.size.height / 2);

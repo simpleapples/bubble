@@ -60,10 +60,17 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if (node == self.bubbleNormalNode) {
             self.status = BUBBLE_STATUS_FlAT;
+            [self runAction:[SKAction playSoundFileNamed:@"BubbleSound.mp3" waitForCompletion:NO]];
             [self.bubbleNormalNode removeFromParent];
             [self addChild:self.bubbleFlatNode];
         }
     }
+}
+
+- (void)setSize:(CGSize)size {
+    self.bubbleNormalNode.size = size;
+    self.bubbleFlatNode.size = size;
+    super.size = size;
 }
 
 @end

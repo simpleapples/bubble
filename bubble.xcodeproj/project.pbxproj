@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */; };
 		5AFBD20F1A24300C00D52673 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD20E1A24300C00D52673 /* main.m */; };
 		5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2111A24300C00D52673 /* AppDelegate.m */; };
 		5AFBD2151A24300C00D52673 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2141A24300C00D52673 /* GameScene.m */; };
@@ -30,6 +31,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BubbleSound.mp3; path = Resource/BubbleSound.mp3; sourceTree = "<group>"; };
 		5AFBD2091A24300C00D52673 /* bubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBD20D1A24300C00D52673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AFBD20E1A24300C00D52673 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -69,6 +71,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5AC936DB1A25780300AF04C6 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */,
+			);
+			name = Resource;
+			sourceTree = "<group>";
+		};
 		5AFBD2001A24300C00D52673 = {
 			isa = PBXGroup;
 			children = (
@@ -90,6 +100,7 @@
 		5AFBD20B1A24300C00D52673 /* bubble */ = {
 			isa = PBXGroup;
 			children = (
+				5AC936DB1A25780300AF04C6 /* Resource */,
 				5AFBD24A1A24888500D52673 /* Controller */,
 				5AFBD2461A2459C500D52673 /* Node */,
 				5AFBD2371A24301100D52673 /* Scene */,
@@ -241,6 +252,7 @@
 				5AFBD2221A24300C00D52673 /* LaunchScreen.xib in Resources */,
 				5AFBD21F1A24300C00D52673 /* Images.xcassets in Resources */,
 				5AFBD21D1A24300C00D52673 /* Main.storyboard in Resources */,
+				5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
