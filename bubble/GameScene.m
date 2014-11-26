@@ -95,9 +95,6 @@ static const NSInteger BUBBLE_SIZE = 70;
         
         SKAction *bubbleMoveAction = [SKAction moveToY:-bubbleNode.size.height / 2                  duration:self.speedTime];
         SKAction *bubbleRemoveAction = [SKAction runBlock:^{
-            if (bubbleNode.status == BUBBLE_STATUS_NORMAL && bubbleNode.type == BUBBLE_TYPE_NORMAL) {
-                [self presentResultScene];
-            }
             [bubbleNode removeFromParent];
         }];
         [bubbleNode runAction:[SKAction sequence:@[bubbleMoveAction, bubbleRemoveAction]]];
