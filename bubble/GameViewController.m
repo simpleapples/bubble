@@ -14,7 +14,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    SKView * skView = (SKView *)self.view;
+    SKView *skView = (SKView *)self.view;
     skView.showsFPS = YES;
     skView.showsNodeCount = YES;
     skView.ignoresSiblingOrder = YES;
