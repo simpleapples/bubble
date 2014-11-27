@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A5FA3B11A26CD5D000E7945 /* BombBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */; };
+		5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */; };
 		5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */; };
+		5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDA6761A26FE6900A750A7 /* ResultNode.m */; };
 		5AFBD20F1A24300C00D52673 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD20E1A24300C00D52673 /* main.m */; };
 		5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2111A24300C00D52673 /* AppDelegate.m */; };
 		5AFBD2151A24300C00D52673 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2141A24300C00D52673 /* GameScene.m */; };
@@ -31,7 +34,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A5FA3AF1A26CD5D000E7945 /* BombBubbleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BombBubbleNode.h; sourceTree = "<group>"; };
+		5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BombBubbleNode.m; sourceTree = "<group>"; };
+		5A5FA3B21A26CD9B000E7945 /* NormalBubbleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalBubbleNode.h; sourceTree = "<group>"; };
+		5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalBubbleNode.m; sourceTree = "<group>"; };
 		5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BubbleSound.mp3; path = Resource/BubbleSound.mp3; sourceTree = "<group>"; };
+		5ADDA6751A26FE6900A750A7 /* ResultNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultNode.h; sourceTree = "<group>"; };
+		5ADDA6761A26FE6900A750A7 /* ResultNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultNode.m; sourceTree = "<group>"; };
 		5AFBD2091A24300C00D52673 /* bubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBD20D1A24300C00D52673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AFBD20E1A24300C00D52673 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -156,6 +165,12 @@
 			children = (
 				5AFBD2471A2459D800D52673 /* BubbleNode.h */,
 				5AFBD2481A2459D800D52673 /* BubbleNode.m */,
+				5A5FA3AF1A26CD5D000E7945 /* BombBubbleNode.h */,
+				5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */,
+				5A5FA3B21A26CD9B000E7945 /* NormalBubbleNode.h */,
+				5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */,
+				5ADDA6751A26FE6900A750A7 /* ResultNode.h */,
+				5ADDA6761A26FE6900A750A7 /* ResultNode.m */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -270,9 +285,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */,
 				5AFBD21A1A24300C00D52673 /* GameViewController.m in Sources */,
+				5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */,
 				5AFBD23D1A24332300D52673 /* MenuScene.m in Sources */,
 				5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */,
+				5A5FA3B11A26CD5D000E7945 /* BombBubbleNode.m in Sources */,
 				5AFBD2491A2459D800D52673 /* BubbleNode.m in Sources */,
 				5AFBD2151A24300C00D52673 /* GameScene.m in Sources */,
 				5AFBD20F1A24300C00D52673 /* main.m in Sources */,

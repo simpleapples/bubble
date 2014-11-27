@@ -12,44 +12,28 @@
 
 @property (strong, nonatomic) SKSpriteNode *bubbleNormalNode;
 @property (strong, nonatomic) SKSpriteNode *bubbleFlatNode;
-@property (nonatomic) BUBBLE_TYPE type;
 
 @end
 
 @implementation BubbleNode
 
-- (instancetype)initWithType:(BUBBLE_TYPE)type {
+- (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile {
     self = [super init];
     if (self) {
-        self.type = type;
         self.userInteractionEnabled = YES;
-        self.status = BUBBLE_STATUS_NORMAL;
-        NSString *bubbleType;
-        switch (self.type) {
-            case BUBBLE_TYPE_BOMB:
-                bubbleType = @"BubbleBomb";
-                break;
-            case BUBBLE_TYPE_NORMAL:
-                bubbleType = @"Bubble";
-                break;
-            default:
-                
-                break;
-        }
-        self.bubbleNormalNode = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"%@Normal", bubbleType]];
+        self.bubbleNormalNode = [SKSpriteNode spriteNodeWithImageNamed:normarlFile];
         self.bubbleNormalNode.name = @"BubbleNormal";
-        self.bubbleFlatNode = [SKSpriteNode spriteNodeWithImageNamed:[NSString stringWithFormat:@"%@Flat", bubbleType]];
+        self.bubbleFlatNode = [SKSpriteNode spriteNodeWithImageNamed:flatFile];
         self.bubbleFlatNode.name = @"BubbleFlat";
-        self.bubbleFlatNode.hidden = YES;
         [self addChild:self.bubbleFlatNode];
         [self addChild:self.bubbleNormalNode];
-        self.size = self.bubbleNormalNode.size;
+        self.status = BUBBLE_STATUS_NORMAL;
     }
     return self;
 }
 
 - (instancetype)init {
-    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Must use initWithType: instead." userInfo:nil];
+    @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Must use initWithNormalFile:flatFile: instead." userInfo:nil];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
@@ -61,8 +45,12 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if (node == self.bubbleNormalNode) {
             self.status = BUBBLE_STATUS_FlAT;
+            [self onBubbleClick];
         }
     }
+}
+
+- (void)onBubbleClick {
 }
 
 - (void)setSize:(CGSize)size {
@@ -72,9 +60,6 @@
 }
 
 - (void)setStatus:(BUBBLE_STATUS)status {
-    if (_status == status) {
-        return;
-    }
     _status = status;
     if (self.status == BUBBLE_STATUS_NORMAL) {
         self.bubbleNormalNode.hidden = NO;
@@ -82,9 +67,6 @@
     } else if (self.status == BUBBLE_STATUS_FlAT) {
         self.bubbleNormalNode.hidden = YES;
         self.bubbleFlatNode.hidden = NO;
-        [self runAction:[SKAction playSoundFileNamed:@"BubbleSound.mp3" waitForCompletion:NO]];
-        NSDictionary *dict = [[NSDictionary alloc] initWithObjectsAndKeys:[NSNumber numberWithInteger:self.speedTime], @"speedTime", [NSNumber numberWithInteger:self.type], @"type", [NSNumber numberWithInteger:self.status], @"status", nil];
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleClick" object:dict];
     }
 }
 

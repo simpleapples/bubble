@@ -13,17 +13,15 @@ typedef NS_OPTIONS(NSInteger, BUBBLE_STATUS) {
     BUBBLE_STATUS_FlAT,
 };
 
-typedef NS_OPTIONS(NSInteger, BUBBLE_TYPE) {
-    BUBBLE_TYPE_NORMAL = 0,
-    BUBBLE_TYPE_BOMB,
-};
-
 @interface BubbleNode : SKSpriteNode
 
-@property (nonatomic, readonly) BUBBLE_TYPE type;
 @property (nonatomic) BUBBLE_STATUS status;
-@property (nonatomic) NSInteger speedTime;
 
-- (instancetype)initWithType:(BUBBLE_TYPE)type;
+- (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile;
+- (instancetype)init;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)onBubbleClick;
+- (void)setSize:(CGSize)size;
+- (void)setStatus:(BUBBLE_STATUS)status;
 
 @end

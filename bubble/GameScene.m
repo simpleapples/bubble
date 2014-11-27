@@ -7,7 +7,9 @@
 //
 
 #import "GameScene.h"
-#import "BubbleNode.h"
+#import "NormalBubbleNode.h"
+#import "BombBubbleNode.h"
+#import "ResultNode.h"
 
 typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
     NODE_CATEGORY_BUBBLE = 0,
@@ -18,7 +20,9 @@ typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
 
 @property (strong, nonatomic) NSTimer *timer;
 @property (nonatomic) CGFloat roadWidth;
-@property (nonatomic) NSInteger speedTime;
+@property (nonatomic) CGFloat speed;
+@property (nonatomic) NSInteger bubbleCount;
+@property (nonatomic, getter = isResultNodeDisplayed) BOOL resultNodeDisplayed;
 
 @property (strong, nonatomic) SKNode *ballBackgroundNode;
 @property (strong, nonatomic) SKLabelNode *scoreLabel;
@@ -29,22 +33,17 @@ typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
 
 static const NSInteger ROAD_NUM = 4;
 static const NSInteger BUBBLE_SIZE = 70;
+static const NSInteger ORIGIN_TIME = 8;
+static const NSInteger MAX_SPEED = 3;
 
 -(void)didMoveToView:(SKView *)view {
     __weak id target = self;
-    self.physicsWorld.gravity = CGVectorMake(0,0);
+    self.physicsWorld.gravity = CGVectorMake(0, 0);
     self.physicsWorld.contactDelegate = target;
-    self.speedTime = 6;
+    self.speed = 1;
     self.roadWidth = self.scene.frame.size.width / ROAD_NUM;
     
-    CGFloat gap = self.scene.frame.size.width / ROAD_NUM;
-    NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / self.speedTime);
-    SKAction *createAction = [SKAction runBlock:^{
-        [self createBubbleNode];
-    }];
-    SKAction *waitAction = [SKAction waitForDuration:duration];
-    SKAction *sequence = [SKAction sequence:@[createAction, waitAction]];
-    [self runAction:[SKAction repeatActionForever:sequence]];
+    [self createAction];
     
     SKNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
@@ -74,48 +73,86 @@ static const NSInteger BUBBLE_SIZE = 70;
     self.scoreLabel.zPosition = 100;
     [self addChild:self.scoreLabel];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleClick:) name:@"BubbleClick" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleScore:) name:@"BubbleScore" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleBomb:) name:@"BubbleBomb" object:nil];
 }
 
 - (void)createBubbleNode {
     for (NSInteger i = 0; i < ROAD_NUM; i++) {
-        BUBBLE_TYPE type = BUBBLE_TYPE_NORMAL;
+        CGSize bubbleSize = CGSizeMake(BUBBLE_SIZE, BUBBLE_SIZE);
+        CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
+        BubbleNode *bubbleNode = nil;
         if (arc4random() % 20 == 0) {
-            type = BUBBLE_TYPE_BOMB;
+            bubbleNode = [[BombBubbleNode alloc] init];
+        } else {
+            bubbleNode = [[NormalBubbleNode alloc] init];
         }
-        BubbleNode *bubbleNode = [[BubbleNode alloc] initWithType:type];
         bubbleNode.name = @"Bubble";
-        bubbleNode.size = CGSizeMake(BUBBLE_SIZE, BUBBLE_SIZE);
-        bubbleNode.speedTime = self.speedTime;
+        bubbleNode.size = bubbleSize;
+        bubbleNode.speed = self.speed;
         bubbleNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bubbleNode.size];
         bubbleNode.physicsBody.categoryBitMask = NODE_CATEGORY_BUBBLE;
         bubbleNode.physicsBody.contactTestBitMask = NODE_CATEGORY_NEEDLE | NODE_CATEGORY_BUBBLE;
         bubbleNode.physicsBody.collisionBitMask = NODE_CATEGORY_BUBBLE;
-        
-        CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
-        bubbleNode.position = CGPointMake(offsetX, self.scene.frame.size.height + bubbleNode.size.height / 2);
-        
-        SKAction *bubbleMoveAction = [SKAction moveToY:-bubbleNode.size.height / 2                  duration:self.speedTime];
+        bubbleNode.position = CGPointMake(offsetX, self.scene.frame.size.height + bubbleSize.height / 2);
+        SKAction *bubbleMoveAction = [SKAction moveToY:-bubbleSize.height / 2 duration:ORIGIN_TIME];
         SKAction *bubbleRemoveAction = [SKAction runBlock:^{
+            self.bubbleCount++;
+            [self updateLevel];
             [bubbleNode removeFromParent];
         }];
         [bubbleNode runAction:[SKAction sequence:@[bubbleMoveAction, bubbleRemoveAction]]];
-        
         [self.ballBackgroundNode addChild:bubbleNode];
     }
 }
 
-- (void)onBubbleClick:(NSNotification *)notif {
-    NSDictionary *dict = notif.object;
-    NSInteger speedTime = [[dict objectForKey:@"speedTime"] integerValue];
-//    BUBBLE_STATUS status = [[dict objectForKey:@"status"] integerValue];
-    BUBBLE_TYPE type = [[dict objectForKey:@"type"] integerValue];
-    if (type == BUBBLE_TYPE_NORMAL) {
-        self.scoreLabel.text = [NSString stringWithFormat:@"%d", self.scoreLabel.text.integerValue + (8 - speedTime)];
-    } else if (type == BUBBLE_TYPE_BOMB) {
-        self.paused = YES;
+- (void)showResultWithType:(RESULT_TYPE)type {
+    self.scene.paused = YES;
+    if (!self.isResultNodeDisplayed) {
+        self.resultNodeDisplayed = YES;
+        self.scoreLabel.hidden = YES;
+        ResultNode *resultNode = [[ResultNode alloc] initWithType:type score:self.scoreLabel.text.integerValue size:self.scene.size];
+        resultNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
+        resultNode.zPosition = 500;
+        [self addChild:resultNode];
     }
 }
+
+- (void)createAction {
+    CGFloat gap = self.scene.frame.size.width / ROAD_NUM;
+    NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / (ORIGIN_TIME / self.speed));
+    SKAction *createBubbleAction = [SKAction runBlock:^{
+        [self createBubbleNode];
+    }];
+    SKAction *waitAction = [SKAction waitForDuration:duration];
+    SKAction *repeatAction = [SKAction runBlock:^{
+        [self createAction];
+    }];
+    SKAction *sequence = [SKAction sequence:@[createBubbleAction, waitAction, repeatAction]];
+    [self runAction:sequence];
+}
+
+- (void)updateLevel {
+    CGFloat speed = 0.1 * self.bubbleCount / (ROAD_NUM * 20) + 1;
+    if (speed < MAX_SPEED && speed - self.speed >= 0.1) {
+        self.speed = speed;
+        [self.ballBackgroundNode enumerateChildNodesWithName:@"Bubble" usingBlock:^(SKNode *node, BOOL *stop) {
+            node.speed = self.speed;
+        }];
+    }
+}
+
+#pragma mark - Handler
+
+- (void)onBubbleScore:(NSNotification *)notif {
+    self.scoreLabel.text = [NSString stringWithFormat:@"%d", (NSInteger)(self.scoreLabel.text.integerValue + self.speed * 10)];
+}
+
+- (void)onBubbleBomb:(NSNotification *)notif {
+    [self showResultWithType:RESULT_TYPE_BOMB];
+}
+
+#pragma mark - ContractTest
 
 - (void)didBeginContact:(SKPhysicsContact *)contact {
     BubbleNode *bubbleNode = nil;
@@ -124,9 +161,9 @@ static const NSInteger BUBBLE_SIZE = 70;
     } else if ([contact.bodyA.node.name isEqualToString:@"Needle"] && [contact.bodyB.node.name isEqualToString:@"Bubble"]) {
         bubbleNode = (BubbleNode *)contact.bodyB.node;
     }
-    if (bubbleNode && bubbleNode.status == BUBBLE_STATUS_NORMAL && bubbleNode.type == BUBBLE_TYPE_NORMAL) {
-        bubbleNode.status = BUBBLE_STATUS_FlAT;
-        self.paused = YES;
+    if (bubbleNode && bubbleNode.status == BUBBLE_STATUS_NORMAL && [bubbleNode isMemberOfClass:[NormalBubbleNode class]]) {
+//        bubbleNode.status = BUBBLE_STATUS_FlAT;
+        [self showResultWithType:RESULT_TYPE_NORMAL];
     }
 }
 
