@@ -11,6 +11,7 @@
 #import "BombBubbleNode.h"
 #import "ResultNode.h"
 #import "GameCenterService.h"
+#import "BubblePoolService.h"
 
 typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
     NODE_CATEGORY_BUBBLE = 0,
@@ -19,7 +20,6 @@ typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
 
 @interface GameScene () <SKPhysicsContactDelegate>
 
-@property (strong, nonatomic) NSTimer *timer;
 @property (nonatomic) CGFloat roadWidth;
 @property (nonatomic) CGFloat speed;
 @property (nonatomic) NSInteger bubbleCount;
@@ -84,9 +84,9 @@ static const NSInteger MAX_SPEED = 3;
         CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
         BubbleNode *bubbleNode = nil;
         if (arc4random() % 20 == 0) {
-            bubbleNode = [[BombBubbleNode alloc] init];
+            bubbleNode = [[BubblePoolService sharedSingleton] bombBubble];
         } else {
-            bubbleNode = [[NormalBubbleNode alloc] init];
+            bubbleNode = [[BubblePoolService sharedSingleton] normalBubble];
         }
         bubbleNode.name = @"Bubble";
         bubbleNode.size = bubbleSize;
@@ -151,7 +151,7 @@ static const NSInteger MAX_SPEED = 3;
 #pragma mark - Handler
 
 - (void)onBubbleScore:(NSNotification *)notif {
-    self.scoreLabel.text = [NSString stringWithFormat:@"%d", (NSInteger)(self.scoreLabel.text.integerValue + self.speed * 10)];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (NSInteger)(self.scoreLabel.text.integerValue + self.speed * 10)];
 }
 
 - (void)onBubbleBomb:(NSNotification *)notif {

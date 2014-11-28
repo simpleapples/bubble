@@ -19,6 +19,7 @@
 - (instancetype)init {
     self = [super initWithNormalFile:@"BubbleNormal" flatFile:@"BubbleFlat"];
     if (self) {
+        self.type = BUBBLE_TYPE_NORMAL;
         self.playSoundAction = [SKAction playSoundFileNamed:@"BubbleSound.mp3" waitForCompletion:NO];
     }
     return self;

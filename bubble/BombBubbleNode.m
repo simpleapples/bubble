@@ -12,6 +12,9 @@
 
 - (instancetype)init {
     self = [super initWithNormalFile:@"BubbleBombNormal" flatFile:@"BubbleBombFlat"];
+    if (self) {
+        self.type = BUBBLE_TYPE_BOMB;
+    }
     return self;
 }
 
