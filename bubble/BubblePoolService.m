@@ -30,6 +30,9 @@
 
 - (instancetype)init {
     self = [super init];
+    if (self) {
+        self.bubblePool = [[NSMutableArray alloc] init];
+    }
     return self;
 }
 
@@ -44,33 +47,35 @@
 - (BubbleNode *)bubbleWithType:(BUBBLE_TYPE)type {
     __block BubbleNode *bubbleNode = nil;
     [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
-        if (bubbleNode.type == type && bubbleNode.poolStatus == BUBBLE_POOL_STATUS_AVAILABLE) {
+        if (bubbleItem.type == type && bubbleItem.poolStatus == BUBBLE_POOL_STATUS_AVAILABLE) {
             bubbleNode = bubbleItem;
+            *stop = YES;
         }
     }];
-    if (!bubbleNode) {
-        if (type == BUBBLE_TYPE_BOMB) {
-            BombBubbleNode *bombBubbleNode = [[BombBubbleNode alloc] initWithNormalFile:@"BubbleBombNormal" flatFile:@"BubbleBombFlat"];
-            bombBubbleNode.poolStatus = BUBBLE_POOL_STATUS_UNAVAILABLE;
-            bombBubbleNode.poolIndex = self.bubblePool.count;
-            [self.bubblePool addObject:bombBubbleNode];
-            return bombBubbleNode;
-        } else {
-            NormalBubbleNode *normalBubbleNode = [[NormalBubbleNode alloc] initWithNormalFile:@"BubbleNormal" flatFile:@"BubbleFlat"];
-            normalBubbleNode.poolStatus = BUBBLE_POOL_STATUS_UNAVAILABLE;
-            normalBubbleNode.poolIndex = self.bubblePool.count;
-            [self.bubblePool addObject:normalBubbleNode];
-            return normalBubbleNode;
-        }
-    } else {
+    if (bubbleNode) {
+        bubbleNode.poolStatus = BUBBLE_POOL_STATUS_UNAVAILABLE;
+        bubbleNode.status = BUBBLE_STATUS_NORMAL;
         return bubbleNode;
     }
+    if (type == BUBBLE_TYPE_BOMB) {
+        BombBubbleNode *bombBubbleNode = [[BombBubbleNode alloc] init];
+        bombBubbleNode.poolStatus = BUBBLE_POOL_STATUS_UNAVAILABLE;
+        bombBubbleNode.poolIndex = self.bubblePool.count;
+        [self.bubblePool addObject:bombBubbleNode];
+        return bombBubbleNode;
+    }
+    NormalBubbleNode *normalBubbleNode = [[NormalBubbleNode alloc] init];
+    normalBubbleNode.poolStatus = BUBBLE_POOL_STATUS_UNAVAILABLE;
+    normalBubbleNode.poolIndex = self.bubblePool.count;
+    [self.bubblePool addObject:normalBubbleNode];
+    return normalBubbleNode;
 }
 
 - (void)releaseBubbleWithIndex:(NSInteger)index {
     [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
         if (bubbleItem.poolIndex == index) {
             bubbleItem.poolStatus = BUBBLE_POOL_STATUS_AVAILABLE;
+            *stop = YES;
         }
     }];
 }
