@@ -11,7 +11,22 @@
 
 @implementation GameCenterService
 
-+ (void)authUserWithBlock:(AuthUserBlock)block {
++ (GameCenterService *)sharedSingleton {
+    static GameCenterService *sharedSingleton;
+    @synchronized (self) {
+        if (!sharedSingleton) {
+            sharedSingleton = [[self alloc] init];
+        }
+        return sharedSingleton;
+    }
+}
+
+- (instancetype)init {
+    self = [super init];
+    return self;
+}
+
+- (void)authUserWithBlock:(AuthUserBlock)block {
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     if (localPlayer.authenticated == NO) {
         localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
@@ -26,7 +41,7 @@
     }
 }
 
-+ (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block {
+- (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block {
     GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: @"Bubble_BestScore"];
     scoreReporter.value = score;
     scoreReporter.context = 0;
@@ -41,6 +56,15 @@
             }
         }
     }];
+}
+
+- (void)showLeaderboardWithTarget:(UIViewController *)target {
+    GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
+    __weak id weakTarget = self;
+    leaderboardViewController.gameCenterDelegate = weakTarget;
+    leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    leaderboardViewController.leaderboardIdentifier = @"Bubble_BestScore";
+    [target presentViewController:leaderboardViewController animated:YES completion:nil];
 }
 
 @end

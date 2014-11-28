@@ -116,9 +116,9 @@ static const NSInteger MAX_SPEED = 3;
         resultNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
         resultNode.zPosition = 500;
         [self addChild:resultNode];
-        [GameCenterService authUserWithBlock:^(BOOL success, UIViewController *authViewController) {
+        [[GameCenterService sharedSingleton] authUserWithBlock:^(BOOL success, UIViewController *authViewController) {
             if (success) {
-                [GameCenterService reportBestScore:self.scoreLabel.text.integerValue block:nil];
+                [[GameCenterService sharedSingleton] reportBestScore:self.scoreLabel.text.integerValue block:nil];
             }
         }];
     }

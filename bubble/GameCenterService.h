@@ -14,7 +14,10 @@ typedef void (^ReportScoreBlock)(BOOL success);
 
 @interface GameCenterService : NSObject
 
-+ (void)authUserWithBlock:(AuthUserBlock)block;
-+ (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block;
++ (GameCenterService *)sharedSingleton;
+
+- (void)authUserWithBlock:(AuthUserBlock)block;
+- (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block;
+- (void)showLeaderboardWithTarget:(UIViewController *)target;
 
 @end
