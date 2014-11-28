@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "GameCenterService.h"
 
 @interface AppDelegate ()
 
@@ -16,6 +17,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [GameCenterService authUserWithBlock:^(BOOL success, UIViewController *authViewController) {
+        if (!success) {
+        } else if (authViewController) {
+            [self.window.rootViewController presentViewController:authViewController animated:YES completion:nil];
+        }
+    }];
     return YES;
 }
 

@@ -10,6 +10,7 @@
 #import "NormalBubbleNode.h"
 #import "BombBubbleNode.h"
 #import "ResultNode.h"
+#import "GameCenterService.h"
 
 typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
     NODE_CATEGORY_BUBBLE = 0,
@@ -115,6 +116,7 @@ static const NSInteger MAX_SPEED = 3;
         resultNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
         resultNode.zPosition = 500;
         [self addChild:resultNode];
+        [GameCenterService reportBestScore:self.scoreLabel.text.integerValue block:nil];
     }
 }
 

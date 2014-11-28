@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		5A5FA3B11A26CD5D000E7945 /* BombBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */; };
 		5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */; };
+		5A6F1DC91A28211900E7EAD7 /* GameCenterService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6F1DC81A28211900E7EAD7 /* GameCenterService.m */; };
+		5A6F1DCB1A28255F00E7EAD7 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A6F1DCA1A28255F00E7EAD7 /* GameKit.framework */; };
 		5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */; };
 		5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDA6761A26FE6900A750A7 /* ResultNode.m */; };
 		5AFBD20F1A24300C00D52673 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD20E1A24300C00D52673 /* main.m */; };
@@ -38,6 +40,9 @@
 		5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BombBubbleNode.m; sourceTree = "<group>"; };
 		5A5FA3B21A26CD9B000E7945 /* NormalBubbleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalBubbleNode.h; sourceTree = "<group>"; };
 		5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormalBubbleNode.m; sourceTree = "<group>"; };
+		5A6F1DC71A28211900E7EAD7 /* GameCenterService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameCenterService.h; sourceTree = "<group>"; };
+		5A6F1DC81A28211900E7EAD7 /* GameCenterService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameCenterService.m; sourceTree = "<group>"; };
+		5A6F1DCA1A28255F00E7EAD7 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BubbleSound.mp3; path = Resource/BubbleSound.mp3; sourceTree = "<group>"; };
 		5ADDA6751A26FE6900A750A7 /* ResultNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultNode.h; sourceTree = "<group>"; };
 		5ADDA6761A26FE6900A750A7 /* ResultNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultNode.m; sourceTree = "<group>"; };
@@ -67,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A6F1DCB1A28255F00E7EAD7 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,6 +86,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A6F1DC61A28210B00E7EAD7 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				5A6F1DC71A28211900E7EAD7 /* GameCenterService.h */,
+				5A6F1DC81A28211900E7EAD7 /* GameCenterService.m */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		5A6F1DCC1A28264000E7EAD7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5A6F1DCA1A28255F00E7EAD7 /* GameKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		5AC936DB1A25780300AF04C6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +132,8 @@
 		5AFBD20B1A24300C00D52673 /* bubble */ = {
 			isa = PBXGroup;
 			children = (
+				5A6F1DCC1A28264000E7EAD7 /* Frameworks */,
+				5A6F1DC61A28210B00E7EAD7 /* Service */,
 				5AC936DB1A25780300AF04C6 /* Resource */,
 				5AFBD24A1A24888500D52673 /* Controller */,
 				5AFBD2461A2459C500D52673 /* Node */,
@@ -233,6 +258,12 @@
 				TargetAttributes = {
 					5AFBD2081A24300C00D52673 = {
 						CreatedOnToolsVersion = 6.1;
+						DevelopmentTeam = LMJACF6T63;
+						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
+						};
 					};
 					5AFBD2261A24300C00D52673 = {
 						CreatedOnToolsVersion = 6.1;
@@ -287,6 +318,7 @@
 			files = (
 				5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */,
 				5AFBD21A1A24300C00D52673 /* GameViewController.m in Sources */,
+				5A6F1DC91A28211900E7EAD7 /* GameCenterService.m in Sources */,
 				5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */,
 				5AFBD23D1A24332300D52673 /* MenuScene.m in Sources */,
 				5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */,
@@ -415,10 +447,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = bubble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -426,10 +461,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = bubble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
