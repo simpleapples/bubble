@@ -101,6 +101,7 @@ static const NSInteger MAX_SPEED = 3;
             self.bubbleCount++;
             [self updateLevel];
             [bubbleNode removeFromParent];
+            [[BubblePoolService sharedSingleton] releaseBubbleWithIndex:bubbleNode.poolIndex];
         }];
         [bubbleNode runAction:[SKAction sequence:@[bubbleMoveAction, bubbleRemoveAction]]];
         [self.ballBackgroundNode addChild:bubbleNode];
