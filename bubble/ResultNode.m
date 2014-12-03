@@ -59,12 +59,12 @@
         iconNode.zPosition = 40;
         [self.backgroundNode addChild:iconNode];
         
-        self.backButtonNode = [SKSpriteNode spriteNodeWithImageNamed:@"IconBack"];
+        self.backButtonNode = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonBack"];
         self.backButtonNode.position = CGPointMake(CGRectGetMidX(self.backgroundNode.frame) - 40, CGRectGetMidX(self.backgroundNode.frame) - 120);
         self.backButtonNode.zPosition = 50;
         [self.backgroundNode addChild:self.backButtonNode];
         
-        self.refreshButtonNode = [SKSpriteNode spriteNodeWithImageNamed:@"IconRefresh"];
+        self.refreshButtonNode = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonRefresh"];
         self.refreshButtonNode.position = CGPointMake(CGRectGetMidX(self.backgroundNode.frame) + 40, CGRectGetMidX(self.backgroundNode.frame) - 120);
         self.refreshButtonNode.zPosition = 50;
         [self.backgroundNode addChild:self.refreshButtonNode];

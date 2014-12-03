@@ -12,6 +12,7 @@
 #import "ResultNode.h"
 #import "GameCenterService.h"
 #import "BubblePoolService.h"
+#import "GlobalHolder.h"
 
 typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
     NODE_CATEGORY_BUBBLE = 0,
@@ -117,6 +118,10 @@ static const NSInteger MAX_SPEED = 3;
         resultNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
         resultNode.zPosition = 500;
         [self addChild:resultNode];
+        if (self.scoreLabel.text.integerValue > [GlobalHolder sharedSingleton].bestScore) {
+            [GlobalHolder sharedSingleton].bestScore = self.scoreLabel.text.integerValue;
+            [[GlobalHolder sharedSingleton] backupToLocal];
+        }
         [[GameCenterService sharedSingleton] authUserWithBlock:^(BOOL success, UIViewController *authViewController) {
             if (success) {
                 [[GameCenterService sharedSingleton] reportBestScore:self.scoreLabel.text.integerValue block:nil];
@@ -152,7 +157,7 @@ static const NSInteger MAX_SPEED = 3;
 #pragma mark - Handler
 
 - (void)onBubbleScore:(NSNotification *)notif {
-    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (NSInteger)(self.scoreLabel.text.integerValue + self.speed * 10)];
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)(self.scoreLabel.text.integerValue + self.speed * 10)];
 }
 
 - (void)onBubbleBomb:(NSNotification *)notif {

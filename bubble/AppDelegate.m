@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "GameCenterService.h"
+#import "GlobalHolder.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,7 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [[GlobalHolder sharedSingleton] recoverFromLocal];
     [[GameCenterService sharedSingleton] authUserWithBlock:^(BOOL success, UIViewController *authViewController) {
         if (!success) {
         } else if (authViewController) {
