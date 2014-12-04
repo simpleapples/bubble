@@ -80,4 +80,11 @@
     }];
 }
 
+- (void)resetPool {
+    [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
+        [bubbleItem removeFromParent];
+    }];
+    [self.bubblePool removeAllObjects];
+}
+
 @end

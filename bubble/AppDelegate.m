@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "GameCenterService.h"
 #import "GlobalHolder.h"
+#import <SpriteKit/SpriteKit.h>
 
 @interface AppDelegate ()
 

@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A1520D21A30076E00CBEB06 /* ResultScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A1520D11A30076E00CBEB06 /* ResultScene.m */; };
+		5A1520D81A303EDF00CBEB06 /* libWeChatSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1520D51A303EDF00CBEB06 /* libWeChatSDK.a */; };
+		5A1520DA1A304A1B00CBEB06 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1520D91A304A1B00CBEB06 /* SystemConfiguration.framework */; };
+		5A1520DC1A304A1F00CBEB06 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1520DB1A304A1F00CBEB06 /* libz.dylib */; };
+		5A1520DE1A304A2E00CBEB06 /* libsqlite3.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A1520DD1A304A2E00CBEB06 /* libsqlite3.0.dylib */; };
+		5A1520E21A304EAE00CBEB06 /* PopSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5A1520E11A304EAE00CBEB06 /* PopSound.mp3 */; };
+		5A1520E41A3065A500CBEB06 /* BombSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5A1520E31A3065A500CBEB06 /* BombSound.mp3 */; };
 		5A5FA3B11A26CD5D000E7945 /* BombBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */; };
 		5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */; };
 		5A6F1DC91A28211900E7EAD7 /* GameCenterService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6F1DC81A28211900E7EAD7 /* GameCenterService.m */; };
@@ -14,7 +21,6 @@
 		5A6F1DCF1A28528700E7EAD7 /* BubblePoolService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5A6F1DCE1A28528700E7EAD7 /* BubblePoolService.m */; };
 		5AA4559C1A2F196E00841696 /* GlobalHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AA4559B1A2F196E00841696 /* GlobalHolder.m */; };
 		5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */; };
-		5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ADDA6761A26FE6900A750A7 /* ResultNode.m */; };
 		5AFBD20F1A24300C00D52673 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD20E1A24300C00D52673 /* main.m */; };
 		5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2111A24300C00D52673 /* AppDelegate.m */; };
 		5AFBD2151A24300C00D52673 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 5AFBD2141A24300C00D52673 /* GameScene.m */; };
@@ -38,6 +44,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5A1520D01A30076E00CBEB06 /* ResultScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultScene.h; sourceTree = "<group>"; };
+		5A1520D11A30076E00CBEB06 /* ResultScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultScene.m; sourceTree = "<group>"; };
+		5A1520D51A303EDF00CBEB06 /* libWeChatSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libWeChatSDK.a; sourceTree = "<group>"; };
+		5A1520D61A303EDF00CBEB06 /* WXApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApi.h; sourceTree = "<group>"; };
+		5A1520D71A303EDF00CBEB06 /* WXApiObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WXApiObject.h; sourceTree = "<group>"; };
+		5A1520D91A304A1B00CBEB06 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		5A1520DB1A304A1F00CBEB06 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		5A1520DD1A304A2E00CBEB06 /* libsqlite3.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.0.dylib; path = usr/lib/libsqlite3.0.dylib; sourceTree = SDKROOT; };
+		5A1520E11A304EAE00CBEB06 /* PopSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = PopSound.mp3; path = Resource/PopSound.mp3; sourceTree = "<group>"; };
+		5A1520E31A3065A500CBEB06 /* BombSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BombSound.mp3; path = Resource/BombSound.mp3; sourceTree = "<group>"; };
 		5A5FA3AF1A26CD5D000E7945 /* BombBubbleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BombBubbleNode.h; sourceTree = "<group>"; };
 		5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BombBubbleNode.m; sourceTree = "<group>"; };
 		5A5FA3B21A26CD9B000E7945 /* NormalBubbleNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormalBubbleNode.h; sourceTree = "<group>"; };
@@ -50,8 +66,6 @@
 		5AA4559A1A2F196E00841696 /* GlobalHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlobalHolder.h; sourceTree = "<group>"; };
 		5AA4559B1A2F196E00841696 /* GlobalHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlobalHolder.m; sourceTree = "<group>"; };
 		5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = BubbleSound.mp3; path = Resource/BubbleSound.mp3; sourceTree = "<group>"; };
-		5ADDA6751A26FE6900A750A7 /* ResultNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResultNode.h; sourceTree = "<group>"; };
-		5ADDA6761A26FE6900A750A7 /* ResultNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResultNode.m; sourceTree = "<group>"; };
 		5AFBD2091A24300C00D52673 /* bubble.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bubble.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFBD20D1A24300C00D52673 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AFBD20E1A24300C00D52673 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -78,6 +92,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A1520DE1A304A2E00CBEB06 /* libsqlite3.0.dylib in Frameworks */,
+				5A1520DC1A304A1F00CBEB06 /* libz.dylib in Frameworks */,
+				5A1520DA1A304A1B00CBEB06 /* SystemConfiguration.framework in Frameworks */,
+				5A1520D81A303EDF00CBEB06 /* libWeChatSDK.a in Frameworks */,
 				5A6F1DCB1A28255F00E7EAD7 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -92,6 +110,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A1520D31A303E4700CBEB06 /* Libs */ = {
+			isa = PBXGroup;
+			children = (
+				5A1520D41A303EDF00CBEB06 /* WXApi */,
+			);
+			name = Libs;
+			sourceTree = "<group>";
+		};
+		5A1520D41A303EDF00CBEB06 /* WXApi */ = {
+			isa = PBXGroup;
+			children = (
+				5A1520D51A303EDF00CBEB06 /* libWeChatSDK.a */,
+				5A1520D61A303EDF00CBEB06 /* WXApi.h */,
+				5A1520D71A303EDF00CBEB06 /* WXApiObject.h */,
+			);
+			path = WXApi;
+			sourceTree = "<group>";
+		};
 		5A6F1DC61A28210B00E7EAD7 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +144,9 @@
 		5A6F1DCC1A28264000E7EAD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5A1520DD1A304A2E00CBEB06 /* libsqlite3.0.dylib */,
+				5A1520DB1A304A1F00CBEB06 /* libz.dylib */,
+				5A1520D91A304A1B00CBEB06 /* SystemConfiguration.framework */,
 				5A6F1DCA1A28255F00E7EAD7 /* GameKit.framework */,
 			);
 			name = Frameworks;
@@ -116,6 +155,8 @@
 		5AC936DB1A25780300AF04C6 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5A1520E31A3065A500CBEB06 /* BombSound.mp3 */,
+				5A1520E11A304EAE00CBEB06 /* PopSound.mp3 */,
 				5AC936E01A2579CC00AF04C6 /* BubbleSound.mp3 */,
 			);
 			name = Resource;
@@ -142,6 +183,7 @@
 		5AFBD20B1A24300C00D52673 /* bubble */ = {
 			isa = PBXGroup;
 			children = (
+				5A1520D31A303E4700CBEB06 /* Libs */,
 				5A6F1DCC1A28264000E7EAD7 /* Frameworks */,
 				5A6F1DC61A28210B00E7EAD7 /* Service */,
 				5AC936DB1A25780300AF04C6 /* Resource */,
@@ -191,6 +233,8 @@
 				5AFBD2141A24300C00D52673 /* GameScene.m */,
 				5AFBD23B1A24332300D52673 /* MenuScene.h */,
 				5AFBD23C1A24332300D52673 /* MenuScene.m */,
+				5A1520D01A30076E00CBEB06 /* ResultScene.h */,
+				5A1520D11A30076E00CBEB06 /* ResultScene.m */,
 			);
 			name = Scene;
 			sourceTree = "<group>";
@@ -204,8 +248,6 @@
 				5A5FA3B01A26CD5D000E7945 /* BombBubbleNode.m */,
 				5A5FA3B21A26CD9B000E7945 /* NormalBubbleNode.h */,
 				5A5FA3B31A26CD9B000E7945 /* NormalBubbleNode.m */,
-				5ADDA6751A26FE6900A750A7 /* ResultNode.h */,
-				5ADDA6761A26FE6900A750A7 /* ResultNode.m */,
 			);
 			name = Node;
 			sourceTree = "<group>";
@@ -305,9 +347,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A1520E21A304EAE00CBEB06 /* PopSound.mp3 in Resources */,
 				5AFBD2221A24300C00D52673 /* LaunchScreen.xib in Resources */,
 				5AFBD21F1A24300C00D52673 /* Images.xcassets in Resources */,
 				5AFBD21D1A24300C00D52673 /* Main.storyboard in Resources */,
+				5A1520E41A3065A500CBEB06 /* BombSound.mp3 in Resources */,
 				5AC936E11A2579CC00AF04C6 /* BubbleSound.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -329,13 +373,13 @@
 				5A5FA3B41A26CD9B000E7945 /* NormalBubbleNode.m in Sources */,
 				5AFBD21A1A24300C00D52673 /* GameViewController.m in Sources */,
 				5A6F1DC91A28211900E7EAD7 /* GameCenterService.m in Sources */,
-				5ADDA6771A26FE6900A750A7 /* ResultNode.m in Sources */,
 				5AFBD23D1A24332300D52673 /* MenuScene.m in Sources */,
 				5AFBD2121A24300C00D52673 /* AppDelegate.m in Sources */,
 				5A5FA3B11A26CD5D000E7945 /* BombBubbleNode.m in Sources */,
 				5AFBD2491A2459D800D52673 /* BubbleNode.m in Sources */,
 				5AA4559C1A2F196E00841696 /* GlobalHolder.m in Sources */,
 				5AFBD2151A24300C00D52673 /* GameScene.m in Sources */,
+				5A1520D21A30076E00CBEB06 /* ResultScene.m in Sources */,
 				5AFBD20F1A24300C00D52673 /* main.m in Sources */,
 				5A6F1DCF1A28528700E7EAD7 /* BubblePoolService.m in Sources */,
 			);
@@ -464,6 +508,10 @@
 				INFOPLIST_FILE = bubble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bubble/WXApi",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -478,6 +526,10 @@
 				INFOPLIST_FILE = bubble/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/bubble/WXApi",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

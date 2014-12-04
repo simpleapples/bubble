@@ -1,44 +1,46 @@
 //
-//  MenuScene.m
+//  ResultScene.m
 //  bubble
 //
-//  Created by Zzy on 11/25/14.
+//  Created by Zzy on 12/4/14.
 //  Copyright (c) 2014 zangzhiya. All rights reserved.
 //
 
-#import "MenuScene.h"
+#import "ResultScene.h"
 #import "GameScene.h"
+#import "MenuScene.h"
 #import "GameCenterService.h"
 #import "GlobalHolder.h"
-#import "WXApi.h"
+#import "WXApi/WXApi.h"
 
-@interface MenuScene ()
+@interface ResultScene ()
 
 @property (strong, nonatomic) SKSpriteNode *menuBackground;
-@property (strong, nonatomic) SKSpriteNode *startButton;
-@property (strong, nonatomic) SKSpriteNode *starButton;
+@property (strong, nonatomic) SKLabelNode *scoreLabel;
+@property (strong, nonatomic) SKLabelNode *bestScoreLabel;
+@property (strong, nonatomic) SKSpriteNode *restartButton;
+@property (strong, nonatomic) SKSpriteNode *homeButton;
 @property (strong, nonatomic) SKSpriteNode *leaderboardButton;
 @property (strong, nonatomic) SKSpriteNode *shareButton;
-@property (strong, nonatomic) SKLabelNode *scoreLabel;
 @property (strong, nonatomic) SKAction *playPopSoundAction;
 
 @end
 
-@implementation MenuScene
+@implementation ResultScene
 
 - (void)didMoveToView:(SKView *)view {
     self.playPopSoundAction = [SKAction playSoundFileNamed:@"PopSound.mp3" waitForCompletion:YES];
-    
+
     SKNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     backgroundNode.zPosition = 10;
     [self addChild:backgroundNode];
     
-    SKSpriteNode *titleLogo = [SKSpriteNode spriteNodeWithImageNamed:@"TitleLogo"];
-    titleLogo.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 160);
-    titleLogo.zPosition = 15;
-    titleLogo.size = CGSizeMake(237, 84);
-    [self addChild:titleLogo];
+    SKSpriteNode *gameOverTitle = [SKSpriteNode spriteNodeWithImageNamed:@"TitleGameOver"];
+    gameOverTitle.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 160);
+    gameOverTitle.zPosition = 15;
+    gameOverTitle.size = CGSizeMake(233, 65);
+    [self addChild:gameOverTitle];
     
     self.menuBackground = [SKSpriteNode spriteNodeWithImageNamed:@"MenuBackground"];
     self.menuBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
@@ -46,37 +48,57 @@
     self.menuBackground.size = CGSizeMake(254, 298);
     [self addChild:self.menuBackground];
     
+    SKLabelNode *scoreTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"STHeitiTC-Light"];
+    scoreTitleLabel.text = @"得分";
+    scoreTitleLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
+    scoreTitleLabel.fontColor = [SKColor colorWithRed:85 / 255.0f green:85 / 255.0f blue:85 / 255.0f alpha:1];
+    scoreTitleLabel.fontSize = 22;
+    scoreTitleLabel.position = CGPointMake(-80, 80);
+    scoreTitleLabel.zPosition = 21;
+    [self.menuBackground addChild:scoreTitleLabel];
+    
     SKLabelNode *boardTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"STHeitiTC-Light"];
     boardTitleLabel.text = @"最高分";
+    boardTitleLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeLeft;
     boardTitleLabel.fontColor = [SKColor colorWithRed:85 / 255.0f green:85 / 255.0f blue:85 / 255.0f alpha:1];
-    boardTitleLabel.fontSize = 26;
-    boardTitleLabel.position = CGPointMake(0, 80);
+    boardTitleLabel.fontSize = 22;
+    boardTitleLabel.position = CGPointMake(-80, 40);
     boardTitleLabel.zPosition = 21;
     [self.menuBackground addChild:boardTitleLabel];
     
     self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
-    if ([GlobalHolder sharedSingleton].bestScore > 0) {
-        self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)[GlobalHolder sharedSingleton].bestScore];
-    } else {
-        self.scoreLabel.text = @"----";
-    }
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)self.score];
     self.scoreLabel.fontColor = [SKColor colorWithRed:85 / 255.0f green:163 / 255.0f blue:79 / 255.0f alpha:1];
-    self.scoreLabel.fontSize = 32;
-    self.scoreLabel.position = CGPointMake(0, 45);
+    self.scoreLabel.fontSize = 28;
+    self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
+    self.scoreLabel.position = CGPointMake(80, 80);
     self.scoreLabel.zPosition = 22;
     [self.menuBackground addChild:self.scoreLabel];
     
-    self.startButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonStart"];
-    self.startButton.position = CGPointMake(0, -10);
-    self.startButton.zPosition = 23;
-    self.startButton.size = CGSizeMake(160, 50);
-    [self.menuBackground addChild:self.startButton];
+    self.bestScoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
+    if ([GlobalHolder sharedSingleton].bestScore > 0) {
+        self.bestScoreLabel.text = [NSString stringWithFormat:@"%ld", (long)[GlobalHolder sharedSingleton].bestScore];
+    } else {
+        self.bestScoreLabel.text = @"----";
+    }
+    self.bestScoreLabel.fontColor = [SKColor colorWithRed:85 / 255.0f green:163 / 255.0f blue:79 / 255.0f alpha:1];
+    self.bestScoreLabel.fontSize = 28;
+    self.bestScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
+    self.bestScoreLabel.position = CGPointMake(80, 40);
+    self.bestScoreLabel.zPosition = 22;
+    [self.menuBackground addChild:self.bestScoreLabel];
     
-    self.starButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonStar"];
-    self.starButton.position = CGPointMake(-60, -90);
-    self.starButton.zPosition = 24;
-    self.starButton.size = CGSizeMake(30, 30);
-    [self.menuBackground addChild:self.starButton];
+    self.restartButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonRestart"];
+    self.restartButton.position = CGPointMake(0, -10);
+    self.restartButton.zPosition = 23;
+    self.restartButton.size = CGSizeMake(160, 50);
+    [self.menuBackground addChild:self.restartButton];
+    
+    self.homeButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonHome"];
+    self.homeButton.position = CGPointMake(-60, -90);
+    self.homeButton.zPosition = 24;
+    self.homeButton.size = CGSizeMake(27, 28);
+    [self.menuBackground addChild:self.homeButton];
     
     self.leaderboardButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonLeaderboard"];
     self.leaderboardButton.position = CGPointMake(0, -95);
@@ -95,16 +117,17 @@
     for (UITouch *touch in touches) {
         CGPoint touchLocation = [touch locationInNode:self.menuBackground];
         SKNode *node = [self.menuBackground nodeAtPoint:touchLocation];
-        if (node == self.startButton) {
+        if (node == self.restartButton) {
             [self playPopSoundWithBlock:^{
                 GameScene *gameScene = [[GameScene alloc] initWithSize:self.view.bounds.size];
                 gameScene.scaleMode = SKSceneScaleModeAspectFill;
                 [self.scene.view presentScene:gameScene];
             }];
-        } else if (node == self.starButton) {
+        } else if (node == self.homeButton) {
             [self playPopSoundWithBlock:^{
-                NSString *urlStr = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=946285061";
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:urlStr]];
+                MenuScene *menuScene = [[MenuScene alloc] initWithSize:self.view.bounds.size];
+                menuScene.scaleMode = SKSceneScaleModeAspectFill;
+                [self.scene.view presentScene:menuScene];
             }];
         } else if (node == self.leaderboardButton) {
             [self playPopSoundWithBlock:^{

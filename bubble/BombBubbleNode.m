@@ -8,6 +8,12 @@
 
 #import "BombBubbleNode.h"
 
+@interface BombBubbleNode ()
+
+@property (strong, nonatomic) SKAction *sequenceAction;
+
+@end
+
 @implementation BombBubbleNode
 
 - (instancetype)init {
@@ -19,7 +25,8 @@
 }
 
 - (void)onBubbleClick {
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleBomb" object:nil];
+    __weak id node = self;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleBomb" object:node];
 }
 
 @end

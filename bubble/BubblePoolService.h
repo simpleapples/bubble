@@ -17,5 +17,6 @@
 - (NormalBubbleNode *)normalBubble;
 - (BombBubbleNode *)bombBubble;
 - (void)releaseBubbleWithIndex:(NSInteger)index;
+- (void)resetPool;
 
 @end
