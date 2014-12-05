@@ -42,7 +42,7 @@ static const NSInteger BUBBLE_SIZE = 70;
 static const NSInteger ORIGIN_TIME = 6;
 static const NSInteger MAX_SPEED = 3;
 
--(void)didMoveToView:(SKView *)view {
+-(void)didMoveToView:(SKView *)view {    
     __weak id target = self;
     self.physicsWorld.gravity = CGVectorMake(0, 0);
     self.physicsWorld.contactDelegate = target;
@@ -149,7 +149,8 @@ static const NSInteger MAX_SPEED = 3;
     [[BubblePoolService sharedSingleton] resetPool];
     [self resetScene];
     
-    ResultScene *resultScene = [[ResultScene alloc] initWithSize:self.view.bounds.size];
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    ResultScene *resultScene = [[ResultScene alloc] initWithSize:size];
     resultScene.score = score;
     resultScene.scaleMode = SKSceneScaleModeAspectFill;
     [self.scene.view presentScene:resultScene];

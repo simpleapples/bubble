@@ -15,11 +15,12 @@
     [super viewDidLoad];
 
     SKView *skView = (SKView *)self.view;
-    skView.showsFPS = YES;
-    skView.showsNodeCount = YES;
+//    skView.showsFPS = YES;
+//    skView.showsNodeCount = YES;
     skView.ignoresSiblingOrder = YES;
     
-    MenuScene *menuScene = [[MenuScene alloc] initWithSize:self.view.bounds.size];
+    CGSize size = [UIScreen mainScreen].bounds.size;
+    MenuScene *menuScene = [[MenuScene alloc] initWithSize:size];
     menuScene.scaleMode = SKSceneScaleModeAspectFill;
     [skView presentScene:menuScene];
 }

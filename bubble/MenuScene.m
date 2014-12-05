@@ -97,7 +97,8 @@
         SKNode *node = [self.menuBackground nodeAtPoint:touchLocation];
         if (node == self.startButton) {
             [self playPopSoundWithBlock:^{
-                GameScene *gameScene = [[GameScene alloc] initWithSize:self.view.bounds.size];
+                CGSize size = [UIScreen mainScreen].bounds.size;
+                GameScene *gameScene = [[GameScene alloc] initWithSize:size];
                 gameScene.scaleMode = SKSceneScaleModeAspectFill;
                 [self.scene.view presentScene:gameScene];
             }];

@@ -119,13 +119,15 @@
         SKNode *node = [self.menuBackground nodeAtPoint:touchLocation];
         if (node == self.restartButton) {
             [self playPopSoundWithBlock:^{
-                GameScene *gameScene = [[GameScene alloc] initWithSize:self.view.bounds.size];
+                CGSize size = [UIScreen mainScreen].bounds.size;
+                GameScene *gameScene = [[GameScene alloc] initWithSize:size];
                 gameScene.scaleMode = SKSceneScaleModeAspectFill;
                 [self.scene.view presentScene:gameScene];
             }];
         } else if (node == self.homeButton) {
             [self playPopSoundWithBlock:^{
-                MenuScene *menuScene = [[MenuScene alloc] initWithSize:self.view.bounds.size];
+                CGSize size = [UIScreen mainScreen].bounds.size;
+                MenuScene *menuScene = [[MenuScene alloc] initWithSize:size];
                 menuScene.scaleMode = SKSceneScaleModeAspectFill;
                 [self.scene.view presentScene:menuScene];
             }];
