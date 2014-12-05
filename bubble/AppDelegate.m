@@ -27,7 +27,7 @@
             [self.window.rootViewController presentViewController:authViewController animated:YES completion:nil];
         }
     }];
-    [WXApi registerApp:@""];
+    [WXApi registerApp:@"wxa2d0305b5da17aa1"];
     return YES;
 }
 

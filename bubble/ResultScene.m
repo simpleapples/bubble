@@ -156,19 +156,18 @@
 - (void)shareAskWithWeChat:(int)scene
 {
     WXWebpageObject *ext = [WXWebpageObject object];
-    ext.webpageUrl = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=946285061";
+    ext.webpageUrl = @"http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/id946285061?src=weixinshare";
     
     NSInteger bestScore = [GlobalHolder sharedSingleton].bestScore;
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.mediaObject = ext;
     if (bestScore > 100) {
-        message.title = [NSString stringWithFormat:@"一口气挤了%ld个泡泡，我就是任性", (long)bestScore];
+        message.title = [NSString stringWithFormat:@"一口气捏了%ld个泡泡，我就是任性", (long)bestScore];
     } else {
-        message.title = @"我爱挤泡泡，我就是任性";
+        message.title = @"我爱捏泡泡，我就是任性";
     }
-    message.description = @"";
-    [message setThumbImage:[UIImage imageNamed:@"BubbleNormal"]];
+    [message setThumbImage:[UIImage imageNamed:@"ShareIcon"]];
     
     SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
     req.bText = NO;
