@@ -10,6 +10,7 @@
 #import "GameCenterService.h"
 #import "GlobalHolder.h"
 #import <SpriteKit/SpriteKit.h>
+#import "WXApi.h"
 
 @interface AppDelegate ()
 
@@ -26,6 +27,7 @@
             [self.window.rootViewController presentViewController:authViewController animated:YES completion:nil];
         }
     }];
+    [WXApi registerApp:@""];
     return YES;
 }
 
