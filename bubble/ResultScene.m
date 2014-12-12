@@ -158,7 +158,7 @@
     WXWebpageObject *ext = [WXWebpageObject object];
     ext.webpageUrl = @"http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/id946285061?src=weixinshare";
     
-    NSInteger bestScore = [GlobalHolder sharedSingleton].bestScore;
+    NSInteger bestScore = self.bestScoreLabel.text.integerValue;
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.mediaObject = ext;
