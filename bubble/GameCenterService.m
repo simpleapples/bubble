@@ -13,12 +13,13 @@
 
 + (GameCenterService *)sharedSingleton {
     static GameCenterService *sharedSingleton;
-    @synchronized (self) {
+    static dispatch_once_t onceToken = 0;
+    dispatch_once(&onceToken, ^{
         if (!sharedSingleton) {
             sharedSingleton = [[self alloc] init];
         }
-        return sharedSingleton;
-    }
+    });
+    return sharedSingleton;
 }
 
 - (instancetype)init {
