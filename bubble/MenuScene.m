@@ -131,26 +131,31 @@
 
 - (void)shareAskWithWeChat:(int)scene
 {
-    WXWebpageObject *ext = [WXWebpageObject object];
-    ext.webpageUrl = @"http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/id946285061?src=weixinshare";
-    
-    NSInteger bestScore = [GlobalHolder sharedSingleton].bestScore;
-    
-    WXMediaMessage *message = [WXMediaMessage message];
-    message.mediaObject = ext;
-    if (bestScore > 100) {
-        message.title = [NSString stringWithFormat:@"一口气捏了%ld个泡泡，我就是任性", (long)bestScore];
+    if ([WXApi isWXAppInstalled] && [WXApi isWXAppSupportApi]) {
+        WXWebpageObject *ext = [WXWebpageObject object];
+        ext.webpageUrl = @"http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/id946285061?src=weixinshare";
+        
+        NSInteger bestScore = [GlobalHolder sharedSingleton].bestScore;
+        
+        WXMediaMessage *message = [WXMediaMessage message];
+        message.mediaObject = ext;
+        if (bestScore > 100) {
+            message.title = [NSString stringWithFormat:@"一口气捏了%ld个泡泡，我就是任性", (long)bestScore];
+        } else {
+            message.title = @"我爱捏泡泡，我就是任性";
+        }
+        [message setThumbImage:[UIImage imageNamed:@"ShareIcon"]];
+        
+        SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
+        req.bText = NO;
+        req.message = message;
+        req.scene = scene;
+        
+        [WXApi sendReq:req];
     } else {
-        message.title = @"我爱捏泡泡，我就是任性";
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"无法分享" message:@"没有安装微信，无法使用微信分享" delegate:nil cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alertView show];
     }
-    [message setThumbImage:[UIImage imageNamed:@"ShareIcon"]];
-    
-    SendMessageToWXReq* req = [[SendMessageToWXReq alloc] init];
-    req.bText = NO;
-    req.message = message;
-    req.scene = scene;
-    
-    [WXApi sendReq:req];
 }
 
 @end

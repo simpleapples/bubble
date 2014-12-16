@@ -9,6 +9,10 @@
 #import "GameCenterService.h"
 #import <GameKit/GameKit.h>
 
+@interface GameCenterService () <GKGameCenterControllerDelegate>
+
+@end
+
 @implementation GameCenterService
 
 + (GameCenterService *)sharedSingleton {
@@ -66,6 +70,12 @@
     leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
     leaderboardViewController.leaderboardIdentifier = @"Bubble_BestScore";
     [target presentViewController:leaderboardViewController animated:YES completion:nil];
+}
+
+#pragma mark - GKGameCenterControllerDelegate
+
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
