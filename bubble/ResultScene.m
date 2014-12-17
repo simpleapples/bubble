@@ -28,25 +28,28 @@
 
 @implementation ResultScene
 
-- (void)didMoveToView:(SKView *)view {
+- (void)didMoveToView:(SKView *)view
+{
     self.playPopSoundAction = [SKAction playSoundFileNamed:@"PopSound.mp3" waitForCompletion:YES];
+    
+    [self addChildren];
+}
 
+- (void)addChildren
+{
     SKNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     backgroundNode.zPosition = 10;
-    [self addChild:backgroundNode];
     
     SKSpriteNode *gameOverTitle = [SKSpriteNode spriteNodeWithImageNamed:@"TitleGameOver"];
     gameOverTitle.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 160);
     gameOverTitle.zPosition = 15;
     gameOverTitle.size = CGSizeMake(233, 65);
-    [self addChild:gameOverTitle];
     
     self.menuBackground = [SKSpriteNode spriteNodeWithImageNamed:@"MenuBackground"];
     self.menuBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
     self.menuBackground.zPosition = 20;
     self.menuBackground.size = CGSizeMake(254, 298);
-    [self addChild:self.menuBackground];
     
     SKLabelNode *scoreTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"STHeitiTC-Light"];
     scoreTitleLabel.text = @"得分";
@@ -55,7 +58,6 @@
     scoreTitleLabel.fontSize = 22;
     scoreTitleLabel.position = CGPointMake(-80, 80);
     scoreTitleLabel.zPosition = 21;
-    [self.menuBackground addChild:scoreTitleLabel];
     
     SKLabelNode *boardTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"STHeitiTC-Light"];
     boardTitleLabel.text = @"最高分";
@@ -64,7 +66,6 @@
     boardTitleLabel.fontSize = 22;
     boardTitleLabel.position = CGPointMake(-80, 40);
     boardTitleLabel.zPosition = 21;
-    [self.menuBackground addChild:boardTitleLabel];
     
     self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)self.score];
@@ -73,7 +74,6 @@
     self.scoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     self.scoreLabel.position = CGPointMake(80, 80);
     self.scoreLabel.zPosition = 22;
-    [self.menuBackground addChild:self.scoreLabel];
     
     self.bestScoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
     if ([GlobalHolder sharedSingleton].bestScore > 0) {
@@ -86,34 +86,42 @@
     self.bestScoreLabel.horizontalAlignmentMode = SKLabelHorizontalAlignmentModeRight;
     self.bestScoreLabel.position = CGPointMake(80, 40);
     self.bestScoreLabel.zPosition = 22;
-    [self.menuBackground addChild:self.bestScoreLabel];
     
     self.restartButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonRestart"];
     self.restartButton.position = CGPointMake(0, -10);
     self.restartButton.zPosition = 23;
     self.restartButton.size = CGSizeMake(160, 50);
-    [self.menuBackground addChild:self.restartButton];
     
     self.homeButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonHome"];
     self.homeButton.position = CGPointMake(-60, -90);
     self.homeButton.zPosition = 24;
     self.homeButton.size = CGSizeMake(27, 28);
-    [self.menuBackground addChild:self.homeButton];
     
     self.leaderboardButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonLeaderboard"];
     self.leaderboardButton.position = CGPointMake(0, -95);
     self.leaderboardButton.zPosition = 25;
     self.leaderboardButton.size = CGSizeMake(30, 30);
-    [self.menuBackground addChild:self.leaderboardButton];
     
     self.shareButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonShare"];
     self.shareButton.position = CGPointMake(60, -90);
     self.shareButton.zPosition = 26;
     self.shareButton.size = CGSizeMake(20, 30);
+    
+    [self addChild:backgroundNode];
+    [self addChild:gameOverTitle];
+    [self addChild:self.menuBackground];
+    [self.menuBackground addChild:scoreTitleLabel];
+    [self.menuBackground addChild:boardTitleLabel];
+    [self.menuBackground addChild:self.scoreLabel];
+    [self.menuBackground addChild:self.bestScoreLabel];
+    [self.menuBackground addChild:self.restartButton];
+    [self.menuBackground addChild:self.homeButton];
+    [self.menuBackground addChild:self.leaderboardButton];
     [self.menuBackground addChild:self.shareButton];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     for (UITouch *touch in touches) {
         CGPoint touchLocation = [touch locationInNode:self.menuBackground];
         SKNode *node = [self.menuBackground nodeAtPoint:touchLocation];
@@ -143,7 +151,8 @@
     }
 }
 
-- (void)playPopSoundWithBlock:(void (^)())block {
+- (void)playPopSoundWithBlock:(void (^)())block
+{
     [self runAction:self.playPopSoundAction completion:^{
         if (block) {
             block();

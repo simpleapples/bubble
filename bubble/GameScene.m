@@ -42,25 +42,28 @@ static const NSInteger BUBBLE_SIZE = 70;
 static const NSInteger ORIGIN_TIME = 6;
 static const NSInteger MAX_SPEED = 3;
 
--(void)didMoveToView:(SKView *)view {    
-    __weak id target = self;
+- (void)didMoveToView:(SKView *)view
+{
+    __weak __typeof(self) wself = self;
     self.physicsWorld.gravity = CGVectorMake(0, 0);
-    self.physicsWorld.contactDelegate = target;
+    self.physicsWorld.contactDelegate = wself;
     self.speed = 1;
     self.roadWidth = self.scene.frame.size.width / ROAD_NUM;
-    
     self.playBombSoundAction = [SKAction playSoundFileNamed:@"BombSound.mp3" waitForCompletion:YES];
-    
+
     [self createAction];
     
+    [self addChildren];
+}
+
+- (void)addChildren
+{
     SKNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     backgroundNode.zPosition = 10;
-    [self addChild:backgroundNode];
     
     self.ballBackgroundNode = [SKNode node];
     self.ballBackgroundNode.zPosition = 20;
-    [self addChild:self.ballBackgroundNode];
     
     SKSpriteNode *borderNode = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:CGSizeMake(self.scene.size.width, 1)];
     borderNode.name = @"Border";
@@ -70,7 +73,6 @@ static const NSInteger MAX_SPEED = 3;
     borderNode.physicsBody.categoryBitMask = NODE_CATEGORY_BORDER;
     borderNode.physicsBody.contactTestBitMask = NODE_CATEGORY_BORDER | NODE_CATEGORY_BUBBLE;
     borderNode.physicsBody.collisionBitMask = NODE_CATEGORY_BORDER;
-    [self addChild:borderNode];
     
     self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
     self.scoreLabel.text = @"0";
@@ -78,14 +80,18 @@ static const NSInteger MAX_SPEED = 3;
     self.scoreLabel.fontSize = 32;
     self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.scene.frame), self.scene.frame.size.height - self.scoreLabel.frame.size.height - 50);
     self.scoreLabel.zPosition = 100;
-    [self addChild:self.scoreLabel];
-    
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleScore:) name:@"BubbleScore" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleBomb:) name:@"BubbleBomb" object:nil];
+    
+    [self addChild:backgroundNode];
+    [self addChild:self.ballBackgroundNode];
+    [self addChild:borderNode];
+    [self addChild:self.scoreLabel];
 }
 
-- (void)createBubbleNode {
+- (void)createBubbleNode
+{
     for (NSInteger i = 0; i < ROAD_NUM; i++) {
         CGSize bubbleSize = CGSizeMake(BUBBLE_SIZE, BUBBLE_SIZE);
         CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
@@ -115,7 +121,8 @@ static const NSInteger MAX_SPEED = 3;
     }
 }
 
-- (void)createAction {
+- (void)createAction
+{
     CGFloat gap = self.scene.frame.size.width / ROAD_NUM;
     NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / (ORIGIN_TIME / self.speed));
     SKAction *createBubbleAction = [SKAction runBlock:^{
@@ -129,7 +136,8 @@ static const NSInteger MAX_SPEED = 3;
     [self runAction:sequence];
 }
 
-- (void)updateLevel {
+- (void)updateLevel
+{
     CGFloat speed = 0.1 * self.bubbleCount / (ROAD_NUM * 20) + 1;
     if (speed < MAX_SPEED && speed - self.speed >= 0.1) {
         self.speed = speed;
@@ -139,24 +147,30 @@ static const NSInteger MAX_SPEED = 3;
     }
 }
 
-- (void)gameOver {
-    NSInteger score = self.scoreLabel.text.integerValue;
-    if (score > [GlobalHolder sharedSingleton].bestScore) {
-        [GlobalHolder sharedSingleton].bestScore = score;
-        [[GlobalHolder sharedSingleton] backupToLocal];
-    }
-    [[GameCenterService sharedSingleton] reportBestScore:score block:nil];
-    [[BubblePoolService sharedSingleton] resetPool];
-    [self resetScene];
-    
-    CGSize size = [UIScreen mainScreen].bounds.size;
-    ResultScene *resultScene = [[ResultScene alloc] initWithSize:size];
-    resultScene.score = score;
-    resultScene.scaleMode = SKSceneScaleModeAspectFill;
-    [self.scene.view presentScene:resultScene];
+- (void)gameOver
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSInteger score = self.scoreLabel.text.integerValue;
+        if (score > [GlobalHolder sharedSingleton].bestScore) {
+            [GlobalHolder sharedSingleton].bestScore = score;
+            [[GlobalHolder sharedSingleton] backupToLocal];
+        }
+        [[GameCenterService sharedSingleton] reportBestScore:score block:nil];
+        [[BubblePoolService sharedSingleton] resetPool];
+        [self resetScene];
+        
+        CGSize size = [UIScreen mainScreen].bounds.size;
+        ResultScene *resultScene = [[ResultScene alloc] initWithSize:size];
+        resultScene.score = score;
+        resultScene.scaleMode = SKSceneScaleModeAspectFill;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.scene.view presentScene:resultScene];
+        });
+    });
 }
 
-- (void)stopGame {
+- (void)stopGame
+{
     if (!self.coverNode) {
         self.coverNode = [SKSpriteNode spriteNodeWithColor:[SKColor clearColor] size:self.scene.size];
         self.coverNode.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame));
@@ -172,7 +186,8 @@ static const NSInteger MAX_SPEED = 3;
     }
 }
 
-- (void)bubbleWink:(BubbleNode *)bubbleNode completion:(void (^)())block {
+- (void)bubbleWink:(BubbleNode *)bubbleNode completion:(void (^)())block
+{
     SKAction *fadeInAction = [SKAction fadeInWithDuration:0.2];
     SKAction *fadeOutAction = [SKAction fadeOutWithDuration:0.2];
     SKAction *waitAction = [SKAction waitForDuration:0.2];
@@ -185,17 +200,20 @@ static const NSInteger MAX_SPEED = 3;
     }];
 }
 
-- (void)resetScene {
+- (void)resetScene
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - NotificationHandler
 
-- (void)onBubbleScore:(NSNotification *)notif {
+- (void)onBubbleScore:(NSNotification *)notif
+{
     self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)(self.scoreLabel.text.integerValue + self.speed * 10)];
 }
 
-- (void)onBubbleBomb:(NSNotification *)notif {
+- (void)onBubbleBomb:(NSNotification *)notif
+{
     BubbleNode *bubbleNode = (BubbleNode *)[notif object];
     [self stopGame];
     [self runAction:self.playBombSoundAction];
@@ -206,7 +224,8 @@ static const NSInteger MAX_SPEED = 3;
 
 #pragma mark - ContractTest
 
-- (void)didBeginContact:(SKPhysicsContact *)contact {
+- (void)didBeginContact:(SKPhysicsContact *)contact
+{
     BubbleNode *bubbleNode = nil;
     if ([contact.bodyA.node.name isEqualToString:@"Bubble"] && [contact.bodyB.node.name isEqualToString:@"Border"]) {
         bubbleNode = (BubbleNode *)contact.bodyA.node;

@@ -26,25 +26,27 @@
 
 @implementation MenuScene
 
-- (void)didMoveToView:(SKView *)view {
+- (void)didMoveToView:(SKView *)view
+{
     self.playPopSoundAction = [SKAction playSoundFileNamed:@"PopSound.mp3" waitForCompletion:YES];
-    
+    [self addChildren];
+}
+
+- (void)addChildren
+{
     SKNode *backgroundNode = [SKSpriteNode spriteNodeWithImageNamed:@"Background"];
     backgroundNode.position = CGPointMake(CGRectGetMidX(self.scene.frame), CGRectGetMidY(self.scene.frame));
     backgroundNode.zPosition = 10;
-    [self addChild:backgroundNode];
     
     SKSpriteNode *titleLogo = [SKSpriteNode spriteNodeWithImageNamed:@"TitleLogo"];
     titleLogo.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 160);
     titleLogo.zPosition = 15;
     titleLogo.size = CGSizeMake(237, 84);
-    [self addChild:titleLogo];
     
     self.menuBackground = [SKSpriteNode spriteNodeWithImageNamed:@"MenuBackground"];
     self.menuBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);
     self.menuBackground.zPosition = 20;
     self.menuBackground.size = CGSizeMake(254, 298);
-    [self addChild:self.menuBackground];
     
     SKLabelNode *boardTitleLabel = [SKLabelNode labelNodeWithFontNamed:@"STHeitiTC-Light"];
     boardTitleLabel.text = @"最高分";
@@ -52,7 +54,6 @@
     boardTitleLabel.fontSize = 26;
     boardTitleLabel.position = CGPointMake(0, 80);
     boardTitleLabel.zPosition = 21;
-    [self.menuBackground addChild:boardTitleLabel];
     
     self.scoreLabel = [SKLabelNode labelNodeWithFontNamed:@"ChalkboardSE-Bold"];
     if ([GlobalHolder sharedSingleton].bestScore > 0) {
@@ -64,34 +65,40 @@
     self.scoreLabel.fontSize = 32;
     self.scoreLabel.position = CGPointMake(0, 45);
     self.scoreLabel.zPosition = 22;
-    [self.menuBackground addChild:self.scoreLabel];
     
     self.startButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonStart"];
     self.startButton.position = CGPointMake(0, -10);
     self.startButton.zPosition = 23;
     self.startButton.size = CGSizeMake(160, 50);
-    [self.menuBackground addChild:self.startButton];
     
     self.starButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonStar"];
     self.starButton.position = CGPointMake(-60, -90);
     self.starButton.zPosition = 24;
     self.starButton.size = CGSizeMake(30, 30);
-    [self.menuBackground addChild:self.starButton];
     
     self.leaderboardButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonLeaderboard"];
     self.leaderboardButton.position = CGPointMake(0, -95);
     self.leaderboardButton.zPosition = 25;
     self.leaderboardButton.size = CGSizeMake(30, 30);
-    [self.menuBackground addChild:self.leaderboardButton];
     
     self.shareButton = [SKSpriteNode spriteNodeWithImageNamed:@"ButtonShare"];
     self.shareButton.position = CGPointMake(60, -90);
     self.shareButton.zPosition = 26;
     self.shareButton.size = CGSizeMake(20, 30);
+    
+    [self addChild:backgroundNode];
+    [self addChild:titleLogo];
+    [self addChild:self.menuBackground];
+    [self.menuBackground addChild:boardTitleLabel];
+    [self.menuBackground addChild:self.scoreLabel];
+    [self.menuBackground addChild:self.startButton];
+    [self.menuBackground addChild:self.starButton];
+    [self.menuBackground addChild:self.leaderboardButton];
     [self.menuBackground addChild:self.shareButton];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     for (UITouch *touch in touches) {
         CGPoint touchLocation = [touch locationInNode:self.menuBackground];
         SKNode *node = [self.menuBackground nodeAtPoint:touchLocation];
@@ -119,7 +126,8 @@
     }
 }
 
-- (void)playPopSoundWithBlock:(void (^)())block {
+- (void)playPopSoundWithBlock:(void (^)())block
+{
     [self runAction:self.playPopSoundAction completion:^{
         if (block) {
             block();

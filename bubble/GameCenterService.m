@@ -65,8 +65,8 @@
 
 - (void)showLeaderboardWithTarget:(UIViewController *)target {
     GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
-    __weak id weakTarget = self;
-    leaderboardViewController.gameCenterDelegate = weakTarget;
+    __weak __typeof(self) wself = self;
+    leaderboardViewController.gameCenterDelegate = wself;
     leaderboardViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
     leaderboardViewController.leaderboardIdentifier = @"Bubble_BestScore";
     [target presentViewController:leaderboardViewController animated:YES completion:nil];
