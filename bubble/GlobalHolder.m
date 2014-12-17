@@ -10,7 +10,8 @@
 
 @implementation GlobalHolder
 
-+ (GlobalHolder *)sharedSingleton {
++ (GlobalHolder *)sharedSingleton
+{
     static GlobalHolder *sharedSingleton;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -21,17 +22,20 @@
     return sharedSingleton;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
     return self;
 }
 
-- (void)recoverFromLocal {
+- (void)recoverFromLocal
+{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     self.bestScore = [userDefaults integerForKey:@"BestScore"];
 }
 
-- (void)backupToLocal {
+- (void)backupToLocal
+{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     [userDefaults setInteger:self.bestScore forKey:@"BestScore"];
     [userDefaults synchronize];

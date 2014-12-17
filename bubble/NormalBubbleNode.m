@@ -16,7 +16,8 @@
 
 @implementation NormalBubbleNode
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super initWithNormalFile:@"BubbleNormal" flatFile:@"BubbleFlat"];
     if (self) {
         self.type = BUBBLE_TYPE_NORMAL;
@@ -25,7 +26,8 @@
     return self;
 }
 
-- (void)onBubbleClick {
+- (void)onBubbleClick
+{
     [self runAction:self.playSoundAction];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleScore" object:nil];
 }

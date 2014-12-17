@@ -17,7 +17,8 @@
 
 @implementation BubbleNode
 
-- (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile {
+- (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile
+{
     self = [super init];
     if (self) {
         self.userInteractionEnabled = YES;
@@ -32,11 +33,13 @@
     return self;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     @throw [NSException exceptionWithName:NSInternalInconsistencyException reason:@"Must use initWithNormalFile:flatFile: instead." userInfo:nil];
 }
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     if (self.status == BUBBLE_STATUS_FlAT) {
         return;
     }
@@ -45,21 +48,23 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if (node == self.bubbleNormalNode) {
             self.status = BUBBLE_STATUS_FlAT;
-            [self onBubbleClick];
+            if ([self.delegate respondsToSelector:@selector(bubbleNode:clickWithType:)]) {
+                __weak __typeof(self) wself = self;
+                [self.delegate bubbleNode:wself clickWithType:self.type];
+            }
         }
     }
 }
 
-- (void)onBubbleClick {
-}
-
-- (void)setSize:(CGSize)size {
+- (void)setSize:(CGSize)size
+{
     self.bubbleNormalNode.size = size;
     self.bubbleFlatNode.size = size;
     super.size = size;
 }
 
-- (void)setStatus:(BUBBLE_STATUS)status {
+- (void)setStatus:(BUBBLE_STATUS)status
+{
     _status = status;
     if (self.status == BUBBLE_STATUS_NORMAL) {
         self.bubbleNormalNode.hidden = NO;

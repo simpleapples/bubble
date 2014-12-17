@@ -16,7 +16,8 @@
 
 @implementation BombBubbleNode
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super initWithNormalFile:@"BubbleBombNormal" flatFile:@"BubbleBombFlat"];
     if (self) {
         self.type = BUBBLE_TYPE_BOMB;
@@ -24,9 +25,10 @@
     return self;
 }
 
-- (void)onBubbleClick {
-    __weak id node = self;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleBomb" object:node];
+- (void)onBubbleClick
+{
+    __weak __typeof(self) wself = self;
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleBomb" object:wself];
 }
 
 @end

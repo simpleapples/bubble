@@ -18,7 +18,8 @@
 
 @implementation BubblePoolService
 
-+ (BubblePoolService *)sharedSingleton {
++ (BubblePoolService *)sharedSingleton
+{
     static BubblePoolService *sharedSingleton;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
@@ -29,7 +30,8 @@
     return sharedSingleton;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
     if (self) {
         self.bubblePool = [[NSMutableArray alloc] init];
@@ -37,15 +39,18 @@
     return self;
 }
 
-- (NormalBubbleNode *)normalBubble {
+- (NormalBubbleNode *)normalBubble
+{
     return (NormalBubbleNode *)[self bubbleWithType:BUBBLE_TYPE_NORMAL];
 }
 
-- (BombBubbleNode *)bombBubble {
+- (BombBubbleNode *)bombBubble
+{
     return (BombBubbleNode *)[self bubbleWithType:BUBBLE_TYPE_BOMB];
 }
 
-- (BubbleNode *)bubbleWithType:(BUBBLE_TYPE)type {
+- (BubbleNode *)bubbleWithType:(BUBBLE_TYPE)type
+{
     __block BubbleNode *bubbleNode = nil;
     [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
         if (bubbleItem.type == type && bubbleItem.poolStatus == BUBBLE_POOL_STATUS_AVAILABLE) {
@@ -72,7 +77,8 @@
     return normalBubbleNode;
 }
 
-- (void)releaseBubbleWithIndex:(NSInteger)index {
+- (void)releaseBubbleWithIndex:(NSInteger)index
+{
     [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
         if (bubbleItem.poolIndex == index) {
             bubbleItem.poolStatus = BUBBLE_POOL_STATUS_AVAILABLE;
@@ -81,7 +87,8 @@
     }];
 }
 
-- (void)resetPool {
+- (void)resetPool
+{
     [self.bubblePool enumerateObjectsUsingBlock:^(BubbleNode *bubbleItem, NSUInteger idx, BOOL *stop) {
         [bubbleItem removeFromParent];
     }];

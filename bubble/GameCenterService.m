@@ -15,7 +15,8 @@
 
 @implementation GameCenterService
 
-+ (GameCenterService *)sharedSingleton {
++ (GameCenterService *)sharedSingleton
+{
     static GameCenterService *sharedSingleton;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
@@ -26,12 +27,14 @@
     return sharedSingleton;
 }
 
-- (instancetype)init {
+- (instancetype)init
+{
     self = [super init];
     return self;
 }
 
-- (void)authUserWithBlock:(AuthUserBlock)block {
+- (void)authUserWithBlock:(AuthUserBlock)block
+{
     GKLocalPlayer *localPlayer = [GKLocalPlayer localPlayer];
     if (localPlayer.authenticated == NO) {
         localPlayer.authenticateHandler = ^(UIViewController *viewController, NSError *error) {
@@ -46,7 +49,8 @@
     }
 }
 
-- (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block {
+- (void)reportBestScore:(NSInteger)score block:(ReportScoreBlock)block
+{
     GKScore *scoreReporter = [[GKScore alloc] initWithLeaderboardIdentifier: @"Bubble_BestScore"];
     scoreReporter.value = score;
     scoreReporter.context = 0;
@@ -63,7 +67,8 @@
     }];
 }
 
-- (void)showLeaderboardWithTarget:(UIViewController *)target {
+- (void)showLeaderboardWithTarget:(UIViewController *)target
+{
     GKGameCenterViewController *leaderboardViewController = [[GKGameCenterViewController alloc] init];
     __weak __typeof(self) wself = self;
     leaderboardViewController.gameCenterDelegate = wself;
@@ -74,7 +79,8 @@
 
 #pragma mark - GKGameCenterControllerDelegate
 
-- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController {
+- (void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
     [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
