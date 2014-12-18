@@ -23,22 +23,12 @@ typedef NS_OPTIONS(NSInteger, BUBBLE_POOL_STATUS) {
     BUBBLE_POOL_STATUS_UNAVAILABLE,
 };
 
-@class BubbleNode;
-
-@protocol BubbleNodeDelegate <NSObject>
-
-@optional
-- (void)bubbleNode:(BubbleNode *)bubbleNode clickWithType:(BUBBLE_TYPE)type;
-
-@end
-
 @interface BubbleNode : SKSpriteNode
 
 @property (nonatomic) BUBBLE_TYPE type;
 @property (nonatomic) BUBBLE_STATUS status;
 @property (nonatomic) BUBBLE_POOL_STATUS poolStatus;
 @property (nonatomic) NSInteger poolIndex;
-@property (nonatomic, assign) id<BubbleNodeDelegate> delegate;
 
 - (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile;
 - (instancetype)init;

@@ -48,12 +48,14 @@
         SKNode *node = [self nodeAtPoint:touchLocation];
         if (node == self.bubbleNormalNode) {
             self.status = BUBBLE_STATUS_FlAT;
-            if ([self.delegate respondsToSelector:@selector(bubbleNode:clickWithType:)]) {
-                __weak __typeof(self) wself = self;
-                [self.delegate bubbleNode:wself clickWithType:self.type];
-            }
+            [self onBubbleClick];
         }
     }
+}
+
+- (void)onBubbleClick
+{
+    
 }
 
 - (void)setSize:(CGSize)size

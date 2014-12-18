@@ -8,6 +8,16 @@
 
 #import "BubbleNode.h"
 
+@class NormalBubbleNode;
+
+@protocol NormalBubbleNodeDelegate <NSObject>
+
+- (void)normalBubbleNodeClick:(NormalBubbleNode *)normalBubbleNode;
+
+@end
+
 @interface NormalBubbleNode : BubbleNode
+
+@property (nonatomic, assign) id<NormalBubbleNodeDelegate> delegate;
 
 @end

@@ -24,6 +24,7 @@
             sharedSingleton = [[self alloc] init];
         }
     });
+    
     return sharedSingleton;
 }
 

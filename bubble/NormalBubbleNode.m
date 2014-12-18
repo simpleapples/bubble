@@ -29,7 +29,9 @@
 - (void)onBubbleClick
 {
     [self runAction:self.playSoundAction];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleScore" object:nil];
+    if ([self.delegate respondsToSelector:@selector(normalBubbleNodeClick:)]) {
+        [self.delegate normalBubbleNodeClick:self];
+    }
 }
 
 @end

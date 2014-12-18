@@ -27,8 +27,9 @@
 
 - (void)onBubbleClick
 {
-    __weak __typeof(self) wself = self;
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"BubbleBomb" object:wself];
+    if ([self.delegate respondsToSelector:@selector(bombBubbleNodeClick:)]) {
+        [self.delegate bombBubbleNodeClick:self];
+    }
 }
 
 @end

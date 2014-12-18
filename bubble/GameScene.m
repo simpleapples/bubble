@@ -19,7 +19,7 @@ typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
     NODE_CATEGORY_BORDER,
 };
 
-@interface GameScene () <SKPhysicsContactDelegate>
+@interface GameScene () <SKPhysicsContactDelegate, BombBubbleNodeDelegate, NormalBubbleNodeDelegate>
 
 @property (nonatomic) CGFloat roadWidth;
 @property (nonatomic) CGFloat speed;
@@ -81,9 +81,6 @@ static const NSInteger MAX_SPEED = 3;
     self.scoreLabel.position = CGPointMake(CGRectGetMidX(self.scene.frame), self.scene.frame.size.height - self.scoreLabel.frame.size.height - 50);
     self.scoreLabel.zPosition = 100;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleScore:) name:@"BubbleScore" object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(onBubbleBomb:) name:@"BubbleBomb" object:nil];
-    
     [self addChild:backgroundNode];
     [self addChild:self.ballBackgroundNode];
     [self addChild:borderNode];
@@ -97,9 +94,13 @@ static const NSInteger MAX_SPEED = 3;
         CGFloat offsetX = i * self.roadWidth + self.roadWidth / 2;
         BubbleNode *bubbleNode = nil;
         if (arc4random() % 10 == 0) {
-            bubbleNode = [[BubblePoolService sharedSingleton] bombBubble];
+            BombBubbleNode *bombBubbleNode = [[BubblePoolService sharedSingleton] bombBubble];
+            bombBubbleNode.delegate = self;
+            bubbleNode = (BubbleNode *)bombBubbleNode;
         } else {
-            bubbleNode = [[BubblePoolService sharedSingleton] normalBubble];
+            NormalBubbleNode *normalBubbleNode = [[BubblePoolService sharedSingleton] normalBubble];
+            normalBubbleNode.delegate = self;
+            bubbleNode = (BubbleNode *)normalBubbleNode;
         }
         bubbleNode.name = @"Bubble";
         bubbleNode.size = bubbleSize;
@@ -205,21 +206,22 @@ static const NSInteger MAX_SPEED = 3;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark - NotificationHandler
+#pragma mark - BombBubbleNodeDelegate
 
-- (void)onBubbleScore:(NSNotification *)notif
+- (void)bombBubbleNodeClick:(BombBubbleNode *)bombBubbleNode
 {
-    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)(self.scoreLabel.text.integerValue + self.speed * 10)];
-}
-
-- (void)onBubbleBomb:(NSNotification *)notif
-{
-    BubbleNode *bubbleNode = (BubbleNode *)[notif object];
     [self stopGame];
     [self runAction:self.playBombSoundAction];
-    [self bubbleWink:bubbleNode completion:^{
+    [self bubbleWink:bombBubbleNode completion:^{
         [self gameOver];
     }];
+}
+
+#pragma mark - NormalBubbleNodeDelegate
+
+- (void)normalBubbleNodeClick:(NormalBubbleNode *)normalBubbleNode
+{
+    self.scoreLabel.text = [NSString stringWithFormat:@"%ld", (long)(self.scoreLabel.text.integerValue + self.speed * 10)];
 }
 
 #pragma mark - ContractTest
