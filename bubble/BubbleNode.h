@@ -31,7 +31,6 @@ typedef NS_OPTIONS(NSInteger, BUBBLE_POOL_STATUS) {
 @property (nonatomic) NSInteger poolIndex;
 
 - (instancetype)initWithNormalFile:(NSString *)normarlFile flatFile:(NSString *)flatFile;
-- (instancetype)init;
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)setSize:(CGSize)size;
 - (void)setStatus:(BUBBLE_STATUS)status;
