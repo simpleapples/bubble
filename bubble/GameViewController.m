@@ -16,10 +16,10 @@
     [super viewDidLoad];
 
     SKView *skView = (SKView *)self.view;
-    if (DEBUG) {
-        skView.showsFPS = YES;
-        skView.showsNodeCount = YES;
-    }
+//    if (DEBUG) {
+//        skView.showsFPS = YES;
+//        skView.showsNodeCount = YES;
+//    }
     skView.ignoresSiblingOrder = YES;
     
     CGSize size = [UIScreen mainScreen].bounds.size;
