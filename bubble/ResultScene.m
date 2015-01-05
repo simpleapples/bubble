@@ -167,12 +167,12 @@
     WXWebpageObject *ext = [WXWebpageObject object];
     ext.webpageUrl = @"http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/cn/app/id946285061?src=weixinshare";
     
-    NSInteger bestScore = self.bestScoreLabel.text.integerValue;
+    NSInteger score = self.scoreLabel.text.integerValue;
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.mediaObject = ext;
-    if (bestScore > 100) {
-        message.title = [NSString stringWithFormat:@"一口气捏了%ld个泡泡，我就是任性", (long)bestScore];
+    if (score > 100) {
+        message.title = [NSString stringWithFormat:@"一口气捏了%ld个泡泡，我就是任性", (long)score];
     } else {
         message.title = @"我爱捏泡泡，我就是任性";
     }
