@@ -7,12 +7,12 @@
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "Logo2x.png"
+      "filename" : "IconLogo2.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "Logo3x.png"
+      "filename" : "IconLogo.png"
     }
   ],
   "info" : {

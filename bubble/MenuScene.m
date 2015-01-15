@@ -41,7 +41,7 @@
     SKSpriteNode *titleLogo = [SKSpriteNode spriteNodeWithImageNamed:@"TitleLogo"];
     titleLogo.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 160);
     titleLogo.zPosition = 15;
-    titleLogo.size = CGSizeMake(245, 67);
+    titleLogo.size = CGSizeMake(242, 66);
     
     self.menuBackground = [SKSpriteNode spriteNodeWithImageNamed:@"MenuBackground"];
     self.menuBackground.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) - 50);

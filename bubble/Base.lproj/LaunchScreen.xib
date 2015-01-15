@@ -15,11 +15,19 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="TitleLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fPl-H5-6fi">
-                    <rect key="frame" x="38" y="91" width="245" height="67"/>
+                    <rect key="frame" x="39" y="91" width="242" height="66"/>
                     <constraints>
+                        <constraint firstAttribute="height" constant="66" id="50V-Lt-5Uk"/>
                         <constraint firstAttribute="width" constant="245" id="fBe-gf-TPN"/>
+                        <constraint firstAttribute="width" constant="242" id="rdP-lv-lIG"/>
                         <constraint firstAttribute="height" constant="67" id="uQG-HJ-hex"/>
                     </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="fBe-gf-TPN"/>
+                            <exclude reference="uQG-HJ-hex"/>
+                        </mask>
+                    </variation>
                 </imageView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="载入中..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ni-cz-ZNk">
                     <rect key="frame" x="120" y="274" width="80" height="20"/>
@@ -50,6 +58,6 @@
     </objects>
     <resources>
         <image name="Background" width="375" height="667"/>
-        <image name="TitleLogo" width="245" height="66"/>
+        <image name="TitleLogo" width="242" height="66"/>
     </resources>
 </document>
