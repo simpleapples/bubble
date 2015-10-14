@@ -22,7 +22,7 @@ typedef NS_OPTIONS(NSInteger, NODE_CATEGORY) {
 @interface GameScene () <SKPhysicsContactDelegate, BombBubbleNodeDelegate, NormalBubbleNodeDelegate>
 
 @property (nonatomic) CGFloat roadWidth;
-@property (nonatomic) CGFloat speed;
+@property (nonatomic) CGFloat nodeSpeed;
 @property (nonatomic) NSInteger bubbleCount;
 @property (nonatomic, getter = isResultNodeDisplayed) BOOL resultNodeDisplayed;
 @property (nonatomic, getter = isStopped) BOOL stopped;
@@ -47,7 +47,7 @@ static const NSInteger MAX_SPEED = 3;
     __weak __typeof(self) wself = self;
     self.physicsWorld.gravity = CGVectorMake(0, 0);
     self.physicsWorld.contactDelegate = wself;
-    self.speed = 1;
+    self.nodeSpeed = 1;
     self.roadWidth = self.scene.frame.size.width / ROAD_NUM;
     self.playBombSoundAction = [SKAction playSoundFileNamed:@"BombSound.mp3" waitForCompletion:YES];
 
@@ -104,7 +104,7 @@ static const NSInteger MAX_SPEED = 3;
         }
         bubbleNode.name = @"Bubble";
         bubbleNode.size = bubbleSize;
-        bubbleNode.speed = self.speed;
+        bubbleNode.speed = self.nodeSpeed;
         bubbleNode.physicsBody = [SKPhysicsBody bodyWithRectangleOfSize:bubbleNode.size];
         bubbleNode.physicsBody.categoryBitMask = NODE_CATEGORY_BUBBLE;
         bubbleNode.physicsBody.contactTestBitMask = NODE_CATEGORY_BORDER | NODE_CATEGORY_BUBBLE;
@@ -125,7 +125,7 @@ static const NSInteger MAX_SPEED = 3;
 - (void)createAction
 {
     CGFloat gap = self.scene.frame.size.width / ROAD_NUM;
-    NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / (ORIGIN_TIME / self.speed));
+    NSTimeInterval duration = gap / ((self.scene.frame.size.height + gap) / (ORIGIN_TIME / self.nodeSpeed));
     SKAction *createBubbleAction = [SKAction runBlock:^{
         [self createBubbleNode];
     }];
@@ -140,10 +140,10 @@ static const NSInteger MAX_SPEED = 3;
 - (void)updateLevel
 {
     CGFloat speed = 0.1 * self.bubbleCount / (ROAD_NUM * 20) + 1;
-    if (speed < MAX_SPEED && speed - self.speed >= 0.1) {
-        self.speed = speed;
+    if (speed < MAX_SPEED && speed - self.nodeSpeed >= 0.1) {
+        self.nodeSpeed = speed;
         [self.ballBackgroundNode enumerateChildNodesWithName:@"Bubble" usingBlock:^(SKNode *node, BOOL *stop) {
-            node.speed = self.speed;
+            node.speed = self.nodeSpeed;
         }];
     }
 }
@@ -181,8 +181,8 @@ static const NSInteger MAX_SPEED = 3;
     if (!self.isStopped) {
         self.stopped = YES;
         [self removeAllActions];
-        [self.ballBackgroundNode.children enumerateObjectsUsingBlock:^(SKSpriteNode *node, NSUInteger idx, BOOL *stop) {
-            [node removeAllActions];
+        [self.ballBackgroundNode.children enumerateObjectsUsingBlock:^(SKNode * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+            [obj removeAllActions];
         }];
     }
 }

@@ -8,17 +8,17 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-typedef NS_OPTIONS(NSInteger, BUBBLE_TYPE) {
+typedef NS_ENUM(NSInteger, BUBBLE_TYPE) {
     BUBBLE_TYPE_NORMAL = 0,
     BUBBLE_TYPE_BOMB,
 };
 
-typedef NS_OPTIONS(NSInteger, BUBBLE_STATUS) {
+typedef NS_ENUM(NSInteger, BUBBLE_STATUS) {
     BUBBLE_STATUS_NORMAL = 0,
     BUBBLE_STATUS_FlAT,
 };
 
-typedef NS_OPTIONS(NSInteger, BUBBLE_POOL_STATUS) {
+typedef NS_ENUM(NSInteger, BUBBLE_POOL_STATUS) {
     BUBBLE_POOL_STATUS_AVAILABLE = 0,
     BUBBLE_POOL_STATUS_UNAVAILABLE,
 };
