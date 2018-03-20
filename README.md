@@ -6,9 +6,7 @@
 ## 截屏
 
 <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple1/v4/1b/bf/d3/1bbfd36c-ce49-a22e-18a2-7c50166180b3/pr_source.png/690x0w.jpg" width="320px" height="568px" />
-
 <img src="https://s1.mzstatic.com/us/r30/Purple1/v4/a4/20/2b/a4202b74-f77e-e905-ae68-ffb3f99d9fa2/pr_source.png?downloadKey=1418483305_a3b6022ae1a82101d0ef271b3444ddc8" width="320px" height="568px" />
-
 <img src="https://s3.mzstatic.com/us/r30/Purple3/v4/77/02/7a/77027a57-6a56-6dc1-e8d2-cd1fc8fd91da/pr_source.png?downloadKey=1418483305_2384836130ef1dfacb33a4ae38dc2508" width="320px" height="568px" />
 
 ## 构建
